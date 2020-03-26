@@ -1,0 +1,24 @@
+{
+  "name": "librarydatabase",
+  "version": "1.0.0",
+  "description": "For the course CPSC 471 at University of Calgary, a library system database API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AsjadMalick/LibraryDatabase.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AsjadMalick/LibraryDatabase/issues"
+  },
+  "homepage": "https://github.com/AsjadMalick/LibraryDatabase#readme",
+  "dependencies": {
+    "@hapi/boom": "^9.1.0",
+    "@hapi/hapi": "^19.1.1",
+    "@hapi/joi": "^17.1.1"
+  }
+}
