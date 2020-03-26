@@ -3,6 +3,7 @@
 const HAPI = require('@hapi/hapi');
 const JOI = require('@hapi/joi');
 const BOOM = require('@hapi/boom');
+const MYSQL = require('mysql');
 const GET = require('./endPointMethods/getMethods.js');
 const POST = require('./endPointMethods/postMethods.js');
 const PUT = require('./endPointMethods/putMethods.js');
@@ -14,6 +15,50 @@ const errorCodeMessages = {
 
 };
 
+//This method will connect to the database if it exists, or create it then connect to it
+const initializeDBConnection = function() {
+
+    //See if mySQL can be connected to
+    var instanceConnection = MYSQL.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "password"
+    });
+
+    var connectionPossible = false;
+    instanceConnection.connect(function(err) {
+        if (err) {
+            console.log('could not connect to mySQL instance')
+        }
+        else {
+            connectionPossible = true;
+            console.log("Connected!");
+        }
+        
+    });
+
+    //now check if the DB itself can be connected to
+    if(connectionPossible) {
+        var connection = MYSQL.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "password",
+            database: 'LibraryDB'
+        });
+        connection.connect(function(err){
+            if (err) {
+                console.log('could not find LibraryDB database')
+            }
+            else {
+               console.log('connected to libraryDB')
+               return connection;
+            }
+        });
+    }
+
+    //catch all return case
+    return false;
+}
 
 //Function to map up all the endpoints defined accres the files
 const setupEndpointArray = function(arr) {
@@ -37,6 +82,9 @@ const runServer = async () => {
         port: 9000,
         host: 'localhost'
     });
+
+    //this be can either equal to false, or a connection object
+    var sqlInstance = initializeDBConnection();
 
     const endPoints = [];
     setupEndpointArray(endPoints);
