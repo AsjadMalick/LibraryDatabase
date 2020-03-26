@@ -3,7 +3,10 @@
 const HAPI = require('@hapi/hapi');
 const JOI = require('@hapi/joi');
 const BOOM = require('@hapi/boom');
-const GETMETHODS = require('./getMethods.js');
+const GET = require('./endPointMethods/getMethods.js');
+const POST = require('./endPointMethods/postMethods.js');
+const PUT = require('./endPointMethods/putMethods.js');
+const DELETE = require('./endPointMethods/deleteMethods.js');
 
 //A js object that will contain the error messages we return
 const errorCodeMessages = {
@@ -11,28 +14,22 @@ const errorCodeMessages = {
 
 };
 
-//The schema we validate input against
-//const joiValidationSchema;
 
-//Define the endpoints here as well as what function they call and use
-const endPoints = [
-    {
-        method: 'GET',
-        path: '/appTest',
-        handler: async (request, h) => {
-            var result = GETMETHODS.getTestServerStuff();
-            return result;
-        }
-    },
-    {
-        method: 'GET',
-        path: '/getBranchInfo',
-        handler: async (request, h) => {
-            var result = GETMETHODS.getBranchInfo();
-            return result;
-        }
-    },
-];
+//Function to map up all the endpoints defined accres the files
+const setupEndpointArray = function(arr) {
+    for(var i = 0; i < GET.endPoints.length; i++) {
+        arr.push(GET.endPoints[i]);
+    }
+    for(var i = 0; i < POST.endPoints.length; i++) {
+        arr.push(POST.endPoints[i]);
+    }
+    for(var i = 0; i < PUT.endPoints.length; i++) {
+        arr.push(PUT.endPoints[i]);
+    }
+    for(var i = 0; i < DELETE.endPoints.length; i++) {
+        arr.push(DELETE.endPoints[i]);
+    }
+}
 
 //This method sets up the server and all the endpoints
 const runServer = async () => {
@@ -41,13 +38,16 @@ const runServer = async () => {
         host: 'localhost'
     });
 
+    const endPoints = [];
+    setupEndpointArray(endPoints);
+
     for(var i = 0; i < endPoints.length; i++) {
         server.route(endPoints[i]);
     }
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
-    
+
     console.log(`On your browser navigate to ${server.info.uri}/appTest in your browser to see if it is working`)
 }
 process.on('unhandledRejection', (err) => {
