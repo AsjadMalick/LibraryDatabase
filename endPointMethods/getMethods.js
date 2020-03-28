@@ -1,3 +1,5 @@
+var db = require('../database.js');
+
 module.exports = {
     endPoints: [
         {
@@ -10,6 +12,14 @@ module.exports = {
         },
         {
             method: 'GET',
+            path: '/dbTest',
+            handler: async (request, h) => {
+                var result = await dbStoredMethod('select_test_procedure');
+                return result;
+            }
+        },
+        {
+            method: 'GET',
             path: '/getBranchInfo',
             handler: async (request, h) => {
                 var result = getBranchInfo();
@@ -17,6 +27,10 @@ module.exports = {
             }
         },
     ]
+};
+
+const dbStoredMethod = function(methodName) {
+    return db.callStored(methodName);
 };
 
 const getTestServerStuff = function() {
