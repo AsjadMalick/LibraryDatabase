@@ -7,7 +7,7 @@ const GET = require('./endPointMethods/getMethods.js');
 const POST = require('./endPointMethods/postMethods.js');
 const PUT = require('./endPointMethods/putMethods.js');
 const DELETE = require('./endPointMethods/deleteMethods.js');
-var db = require('./database.js');
+var DB = require('./database.js');
 
 //A js object that will contain the error messages we return
 const errorCodeMessages = {
@@ -35,23 +35,25 @@ const setupEndpointArray = function(arr) {
 
 //This method sets up the server and all the endpoints
 const runServer = async () => {
-    const server = HAPI.server({
-        port: 9000,
-        host: 'localhost'
-    });
+    var canConnectToSQL = await DB.initDBConnection();
+    if(canConnectToSQL === true) {
 
-    const endPoints = [];
-    setupEndpointArray(endPoints);
+        const server = HAPI.server({
+            port: 9000,
+            host: 'localhost'
+        });
 
-    for(var i = 0; i < endPoints.length; i++) {
-        server.route(endPoints[i]);
+        const endPoints = [];
+        setupEndpointArray(endPoints);
+        for(var i = 0; i < endPoints.length; i++) {
+            server.route(endPoints[i]);
+        }
+        await server.start();
+        
+        console.log('Server running on %s', server.info.uri);
+        console.log(`On your browser navigate to ${server.info.uri}/appTest in your browser to see if the node server is working`);
+        console.log(`On your browser navigate to ${server.info.uri}/dbTest in your browser to see if it the mySQL stored procedure is setup correctly`);
     }
-
-    await server.start();
-    await db.initDBConnection();
-    console.log('Server running on %s', server.info.uri);
-    console.log(`On your browser navigate to ${server.info.uri}/appTest in your browser to see if the node server is working`);
-    console.log(`On your browser navigate to ${server.info.uri}/dbTest in your browser to see if it the mySQL stored procedure is setup correctly`);
 }
 process.on('unhandledRejection', (err) => {
     console.log(err);

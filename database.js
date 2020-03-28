@@ -12,14 +12,19 @@ module.exports = {
             password: "password",
             database: 'librarydb'
         });
-    
-        module.exports.dbConnection.connect(function(err) {
-            if (err) {
-                console.log('Could not connect to librarydb');
-            }
-            else {
-                console.log("Connected to mySQL librarydb");
-            }
+
+        return new Promise((resolve, reject) => {
+            module.exports.dbConnection.connect(function(err) {
+                if (err) {
+                    console.log('Could not connect to librarydb');
+                    return reject(err);
+                }
+                else {
+                    console.log("Connected to mySQL librarydb");
+                    return resolve(true);
+                }
+            });
+
         });
     },
 
