@@ -9,8 +9,8 @@ module.exports = {
         module.exports.dbConnection = MYSQL.createConnection({
             host: "localhost",
             user: "root",
-            password: "password",
-            database: 'librarydb'
+            password: "McL0v1n?",
+            database: 'library_db'
         });
 
         return new Promise((resolve, reject) => {

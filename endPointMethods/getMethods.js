@@ -14,7 +14,7 @@ module.exports = {
             method: 'GET',
             path: '/dbTest',
             handler: async (request, h) => {
-                var result = await dbStoredMethod('select_test_procedure');
+                var result = await dbStoredMethod('get_all_branches');
                 return result;
             }
         },
