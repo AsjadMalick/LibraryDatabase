@@ -9,7 +9,7 @@ module.exports = {
         module.exports.dbConnection = MYSQL.createConnection({
             host: "localhost",
             user: "root",
-            password: "McL0v1n?",
+            password: "password",
             database: 'library_db'
         });
 
