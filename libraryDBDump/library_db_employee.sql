@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `library_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `library_db`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: library_db
+-- Host: 127.0.0.1    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -33,7 +31,7 @@ CREATE TABLE `employee` (
   PRIMARY KEY (`id`),
   KEY `branch_name` (`branch_name`),
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +40,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES ('Forest Lawn Library',1,'John','Smith','Manager'),('Forest Lawn Library',2,'Dominic','Nguyen','Janitor'),('Forest Lawn Library',3,'Joe','Blow','Supervisor');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-29 20:40:34
+-- Dump completed on 2020-03-31  6:10:55

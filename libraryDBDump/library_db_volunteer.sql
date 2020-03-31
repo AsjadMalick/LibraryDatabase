@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `library_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `library_db`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: library_db
+-- Host: 127.0.0.1    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -30,7 +28,7 @@ CREATE TABLE `volunteer` (
   `last_name` varchar(255) DEFAULT NULL,
   `position` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +37,7 @@ CREATE TABLE `volunteer` (
 
 LOCK TABLES `volunteer` WRITE;
 /*!40000 ALTER TABLE `volunteer` DISABLE KEYS */;
+INSERT INTO `volunteer` VALUES (1,'Joe','Blow','Sorter'),(2,'Susan','Baker','Checkout');
 /*!40000 ALTER TABLE `volunteer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-29 20:40:34
+-- Dump completed on 2020-03-31  6:10:55
