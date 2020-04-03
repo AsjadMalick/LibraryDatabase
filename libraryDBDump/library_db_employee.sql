@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -29,8 +29,8 @@ CREATE TABLE `employee` (
   `last_name` varchar(255) DEFAULT NULL,
   `position` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `branch_name` (`branch_name`),
-  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
+  KEY `branch_name_fk` (`branch_name`),
+  CONSTRAINT `branch_name_fk` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-31  6:10:55
+-- Dump completed on 2020-04-02 21:09:16
