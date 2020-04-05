@@ -39,7 +39,7 @@ CREATE TABLE `room` (
 
 LOCK TABLES `room` WRITE;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` VALUES ('Village Square Library',1,30),('Saddletowne Library',4,30);
+INSERT INTO `room` VALUES (1,'Village Square Library',1,30),(2,'Saddletowne Library',4,30);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
