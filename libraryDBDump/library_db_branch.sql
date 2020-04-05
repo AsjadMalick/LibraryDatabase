@@ -28,7 +28,7 @@ CREATE TABLE `branch` (
   `address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq1` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `branch` (
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
-INSERT INTO `branch` VALUES (1,'Bowness Library','6532 Bowness Road NW Calgary AB T3B 0E9'),(2,'Central Library','800 3 St SE Calgary Alberta T2G 2E7'),(3,'Forest Lawn Library',' 4807 8 Ave SE, Calgary, AB T2A 4M1'),(4,'Saddletowne Library','7555 Falconridge Blvd NE, Calgary, AB T3J 0C9'),(5,'Village Square Library','2623 56 St NE, Calgary, AB T1Y 6E7');
+INSERT INTO `branch` VALUES (1,'Bowness Library','6532 Bowness Road NW Calgary AB T3B 0E9'),(2,'Central Library','800 3 St SE Calgary Alberta T2G 2E7'),(3,'Forest Lawn Library',' 4807 8 Ave SE, Calgary, AB T2A 4M1'),(4,'Saddletowne Library','7555 Falconridge Blvd NE, Calgary, AB T3J 0C9'),(5,'Village Square Library','2623 56 St NE, Calgary, AB T1Y 6E7'),(7,'new test branch','42 Baker Street');
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-05 14:34:18
+-- Dump completed on 2020-04-05 17:00:42

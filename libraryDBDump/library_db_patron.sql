@@ -30,7 +30,7 @@ CREATE TABLE `patron` (
   PRIMARY KEY (`card_number`),
   KEY `patron_fk_bn` (`branch_name`),
   CONSTRAINT `patron_fk_bn` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=12347 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12348 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `patron` (
 
 LOCK TABLES `patron` WRITE;
 /*!40000 ALTER TABLE `patron` DISABLE KEYS */;
-INSERT INTO `patron` VALUES (12344,'Saddletowne Library','Charles','Hunt'),(12345,'Forest Lawn Library','Dominic','Nguyen'),(12346,'Central Library','Joe','Blow');
+INSERT INTO `patron` VALUES (12344,'Saddletowne Library','Charles','Hunt'),(12345,'Forest Lawn Library','Dominic','Nguyen'),(12346,'Central Library','Joe','Blow'),(12347,'Central Library','Patron','McPatronFace');
 /*!40000 ALTER TABLE `patron` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-05 14:34:17
+-- Dump completed on 2020-04-05 17:00:41
