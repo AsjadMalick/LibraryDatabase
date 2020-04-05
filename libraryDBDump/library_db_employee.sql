@@ -29,8 +29,8 @@ CREATE TABLE `employee` (
   `last_name` varchar(255) DEFAULT NULL,
   `position` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `branch_name_fk` (`branch_name`),
-  CONSTRAINT `branch_name_fk` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
+  KEY `branch_name` (`branch_name`),
+  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,7 +40,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES ('Forest Lawn Library',1,'John','Smith','Manager'),('Forest Lawn Library',2,'Dominic','Nguyen','Janitor'),('Forest Lawn Library',3,'Joe','Blow','Supervisor');
+INSERT INTO `employee` VALUES ('Forest Lawn Library',1,'John','Smith','Manager'),('Forest Lawn Library',2,'Dominic','Nguyen','Janitor'),('Forest Lawn Library',3,'Joe','Blow','Supervisor'),('Saddletowne Library',4,'Bill','Clinton','Janitor');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

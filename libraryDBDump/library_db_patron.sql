@@ -39,7 +39,7 @@ CREATE TABLE `patron` (
 
 LOCK TABLES `patron` WRITE;
 /*!40000 ALTER TABLE `patron` DISABLE KEYS */;
-INSERT INTO `patron` VALUES (12345,'Forest Lawn Library','Dominic','Nguyen'),(12346,'Central Library','Hubba','Bubba');
+INSERT INTO `patron` VALUES (12344,'Saddletowne Library','Charles','Hunt'),(12345,'Forest Lawn Library','Dominic','Nguyen'),(12346,'Central Library','Joe','Blow');
 /*!40000 ALTER TABLE `patron` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

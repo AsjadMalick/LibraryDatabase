@@ -18,6 +18,46 @@
 --
 -- Dumping routines for database 'library_db'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `borrowBook` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `borrowBook`(cnum int, bid int, due date)
+BEGIN
+INSERT INTO `library_db`.`borrows_book` (`card_number`, `book_id`, `due`) 
+VALUES (cnum, bid, due);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `borrowDisc` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `borrowDisc`(did int, cnum int, due date)
+BEGIN
+INSERT INTO `library_db`.`borrows_disc` (`disc_id`,`card_number`,`due`) 
+VALUES (did, cnum, due);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `createBook` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -28,10 +68,10 @@
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createBook`(IN name VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createBook`(bid int, bname varchar(255))
 BEGIN
-	INSERT INTO book(name)
-    VALUES (name);
+INSERT INTO `library_db`.`book` (`id`,`name`)
+VALUES (bid, bname);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -48,10 +88,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createBranch`(IN new_name VARCHAR(255), IN new_address VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createBranch`(bname varchar(255), baddress varchar(255))
 BEGIN
-	INSERT INTO branch(name, address)
-    VALUES (new_name, new_address);
+INSERT INTO `library_db`.`branch` (`name`, `address`) 
+VALUES (bname, baddress);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -68,10 +108,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createDisc`(IN name VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createDisc`(did int, dname varchar(255))
 BEGIN
-	INSERT INTO disc(name)
-    VALUES (name);
+INSERT INTO `library_db`.`disc` (`id`,`name`)
+VALUES (did, dname);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -88,13 +128,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createEmployee`(
-					IN branch_name VARCHAR(255),  
-                    IN first_name VARCHAR(255), IN last_name VARCHAR(255),
-                    IN position VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createEmployee`( ebranch varchar(255), eid int, fname varchar(255),lname varchar(255), position varchar(255))
 BEGIN
-	INSERT INTO employee(branch_name, first_name, last_name, position)
-    VALUES (branch_name, first_name, last_name, position);
+INSERT INTO `library_db`.`employee` ( `branch_name`, `id`,`first_name` ,`last_name` ,`position`)
+VALUES (ebranch, eid, fname, lname, position);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -111,12 +148,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createPatron`(
-			IN branch_name VARCHAR(255), 
-            IN first_name VARCHAR(255), IN last_name VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createPatron`(cnum int, bname varchar(255), fname varchar(255), lname varchar(255))
 BEGIN
-	INSERT INTO patron(branch_name, first_name, last_name)
-    VALUES (branch_name, first_name, last_name);
+INSERT INTO `library_db`.`patron`(`card_number`, `branch_name`, `first_name`,`last_name`)
+VALUES(cnum, bname, fname, lname);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -133,12 +168,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createProgram`(
-					IN name VARCHAR(255), IN employee_id int unsigned,
-                    IN branch_name VARCHAR(255), IN date date, IN type VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createProgram`(pname varchar(255), eid int, bname varchar(255), pdate date, ptype varchar(255))
 BEGIN
-	INSERT INTO program(name, employee_id, branch_name, date, type)
-    VALUES (name, employee_id, branch_name, date, type);
+INSERT INTO `library_db`.`program`(`name`, `employee_id`, `branch_name`, `date`, `type`)
+VALUES (pname, eid, bname, pdate, ptype);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -155,18 +188,17 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createRoom`(IN branch_name VARCHAR(255), 
-						IN room_number int unsigned, IN capacity int unsigned)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createRoom`(bname varchar(255) , rnumber int , rcapacity int)
 BEGIN
-	INSERT INTO room(branch_name, number, capacity)
-    VALUES (branch_name, room_number, capacity);
+INSERT INTO `library_db`.`room` (`branch_name`, `number`, `capacity`) 
+VALUES (bname, rnumber, rcapacity);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `findEmployee` */;
+/*!50003 DROP PROCEDURE IF EXISTS `createVolunteer` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -176,7 +208,27 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `findEmployee`(id int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createVolunteer`(vid int, fname varchar(255), lname varchar(255), vposition varchar(255))
+BEGIN
+INSERT INTO `library_db`.`volunteer` (`id`, `first_name`,`last_name`, `position`)
+VALUES (vid, fname, lname, vposition);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeById`(id int)
 BEGIN
 SELECT * FROM library_db.employee
 where employee.id = id;
@@ -186,7 +238,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `findVolunteer` */;
+/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeByName` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -196,10 +248,50 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `findVolunteer`(id int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeByName`(fname varchar(255), lname varchar(255))
+BEGIN
+SELECT * FROM library_db.employee
+where employee.first_name = fname AND employee.last_name = lname;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getVolunteerById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteerById`(id int)
 BEGIN
 SELECT * FROM library_db.volunteer
 where volunteer.id = id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getVolunteerByName` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteerByName`(fname varchar(255), lname varchar(255))
+BEGIN
+SELECT * FROM library_db.volunteer
+where volunteer.first_name = fname AND volunteer.last_name = lname;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -216,19 +308,17 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `reserveRoom`(
-			IN card_number int unsigned, IN room_id int unsigned, 
-			IN date date, IN time time)
-BEGIN	
-	INSERT INTO room_reservation(card_number, room_id, date, time)
-    VALUES (card_number, room_id, date, time);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reserveRoom`(rnum int, cnum int, resdate date, restime time)
+BEGIN
+INSERT INTO `library_db`.`room_reservation` (`room_number`, `card_number`, `date`, `time`) 
+VALUES (rnum, cnum, resdate, restime);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SelectBookGenres` */;
+/*!50003 DROP PROCEDURE IF EXISTS `returnBook` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -238,16 +328,17 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SelectBookGenres`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `returnBook`(cnum int, bid int)
 BEGIN
-SELECT * FROM library_db.book_genre;
+DELETE FROM `library_db`.`borrows_book` WHERE 
+(`card_number` = cnum) and (`book_id` = bid);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SelectBooks` */;
+/*!50003 DROP PROCEDURE IF EXISTS `returnDisc` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -257,9 +348,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SelectBooks`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `returnDisc`(cnum int, did int)
 BEGIN
-SELECT * FROM library_db.book;
+DELETE FROM `library_db`.`borrows_disc` WHERE 
+(`card_number` = cnum) and (`disc_id` = did);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -340,6 +432,29 @@ SET `card_number` = card,
 `first_name` = fname,
 `last_name` = lname
  WHERE (`card_number` = card);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updateRoom` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateRoom`(bname varchar(255), rnumber int, rcapacity int)
+BEGIN
+UPDATE `library_db`.`room` SET 
+`branch_name` = bname,
+`number` = rnumber,
+`capacity` = rcapacity 
+WHERE (`number` = rnumber);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
