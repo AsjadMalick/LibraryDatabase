@@ -23,13 +23,14 @@ DROP TABLE IF EXISTS `room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `branch_name` varchar(255) NOT NULL,
   `number` int unsigned NOT NULL,
-  `capacity` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`number`),
-  KEY `room_fk_bn` (`branch_name`),
-  CONSTRAINT `room_fk_bn` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `capacity` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_branch_name_and_room_number` (`branch_name`,`number`),
+  CONSTRAINT `room_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +39,7 @@ CREATE TABLE `room` (
 
 LOCK TABLES `room` WRITE;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES (5,'Central Library',420,69);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-02 21:09:16
+-- Dump completed on 2020-04-05 14:34:18
