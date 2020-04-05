@@ -40,6 +40,7 @@ CREATE TABLE `room_reservation` (
 
 LOCK TABLES `room_reservation` WRITE;
 /*!40000 ALTER TABLE `room_reservation` DISABLE KEYS */;
+INSERT INTO `room_reservation` VALUES (1,12345,'2010-10-10','12:00:00');
 /*!40000 ALTER TABLE `room_reservation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-31  6:10:55
+-- Dump completed on 2020-04-05  4:04:01

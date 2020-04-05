@@ -39,7 +39,7 @@ CREATE TABLE `patron` (
 
 LOCK TABLES `patron` WRITE;
 /*!40000 ALTER TABLE `patron` DISABLE KEYS */;
-INSERT INTO `patron` VALUES (12345,'Forest Lawn Library','Dominic','Nguyen');
+INSERT INTO `patron` VALUES (12344,'Saddletowne Library','Charles','Hunt'),(12345,'Forest Lawn Library','Dominic','Nguyen'),(12346,'Central Library','Joe','Blow');
 /*!40000 ALTER TABLE `patron` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-31  6:10:55
+-- Dump completed on 2020-04-05  4:04:01
