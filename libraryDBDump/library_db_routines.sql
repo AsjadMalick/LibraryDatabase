@@ -1215,6 +1215,47 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updateBook` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateBook`(
+								IN id INT UNSIGNED, 
+                                IN attribute_name VARCHAR(255), IN new_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "%id%" THEN
+		SET	@attribute_name="id";
+	
+	ELSEIF attribute_name LIKE "%name" THEN
+		SET	@attribute_name="name";
+        
+	ELSEIF attribute_name LIKE "%location" THEN
+		SET	@attribute_name="location";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+
+	SET	@query_string = CONCAT("UPDATE book SET ", @attribute_name, "=? ", "WHERE id=?"); 
+	PREPARE stmt1 FROM @query_string;
+    
+	SET	@new_value = new_value;
+    SET @id = id;
+	EXECUTE	stmt1 USING @new_value, @id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `updateBranch` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1225,13 +1266,67 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateBranch`(IN bname varchar(255),
-IN baddress varchar(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateBranch`(
+								IN branch_name VARCHAR(255), 
+                                IN attribute_name VARCHAR(255), IN new_value VARCHAR(255))
 BEGIN
-UPDATE `library_db`.`branch` 
-SET `name` = bname,  
-`address` = baddress
-WHERE (`name` = bname);
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "%name" THEN
+		SET	@attribute_name="name";
+        
+	ELSEIF attribute_name LIKE "%address" THEN
+		SET	@attribute_name="address";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+
+	SET	@query_string = CONCAT("UPDATE branch SET ", @attribute_name, "=? ", "WHERE name=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@new_value = new_value;
+    SET @branch_name = branch_name;
+	EXECUTE	stmt1 USING @new_value, @branch_name;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updateDisc` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateDisc`(
+								IN id INT UNSIGNED, 
+                                IN attribute_name VARCHAR(255), IN new_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "%id%" THEN
+		SET	@attribute_name="id";
+	
+	ELSEIF attribute_name LIKE "%name" THEN
+		SET	@attribute_name="name";
+        
+	ELSEIF attribute_name LIKE "%location" THEN
+		SET	@attribute_name="location";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+
+	SET	@query_string = CONCAT("UPDATE disc SET ", @attribute_name, "=? ", "WHERE id=?"); 
+	PREPARE stmt1 FROM @query_string;
+    
+	SET	@new_value = new_value;
+    SET @id = id;
+	EXECUTE	stmt1 USING @new_value, @id;
 
 END ;;
 DELIMITER ;
@@ -1249,18 +1344,36 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateEmployee`(IN branch varchar(255),
-IN eid int,
-IN fname varchar(255),
-IN lname varchar(255),
-IN position varchar(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateEmployee`(
+								IN id INT UNSIGNED, 
+                                IN attribute_name VARCHAR(255), IN new_value VARCHAR(255))
 BEGIN
-UPDATE `library_db`.`employee` 
-SET `branch_name` = branch,
-`first_name` = fname,
-`last_name` = lname,
-`position` = position
- WHERE (`id` = eid);
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
+        
+	ELSEIF attribute_name="id" THEN
+		SET	@attribute_name="id";
+        
+	ELSEIF attribute_name LIKE "f%name" THEN
+		SET	@attribute_name="first_name";
+        
+	ELSEIF attribute_name LIKE "l%name" THEN
+		SET	@attribute_name="last_name";
+        
+	ELSEIF attribute_name LIKE "pos%" THEN
+		SET	@attribute_name="position";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+
+	SET	@query_string = CONCAT("UPDATE employee SET ", @attribute_name, "=? ", "WHERE id=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@new_value = new_value;
+    SET @id = id;
+	EXECUTE	stmt1 USING @new_value, @id;
+    
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1277,18 +1390,81 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updatePatron`(IN card int,
-IN bname varchar(255),
-IN fname varchar(255),
-IN lname varchar(255)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updatePatron`(
+								IN card_number INT UNSIGNED, 
+                                IN attribute_name VARCHAR(255), IN new_value VARCHAR(255))
 BEGIN
-UPDATE `library_db`.`patron` 
-SET `card_number` = card,
-`branch_name` = bname,
-`first_name` = fname,
-`last_name` = lname
- WHERE (`card_number` = card);
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "id%" OR attribute_name LIKE "%number" THEN
+		SET	@attribute_name="card_number";
+	
+	ELSEIF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
+        
+	ELSEIF attribute_name LIKE "f%name" THEN
+		SET	@attribute_name="first_name";
+        
+	ELSEIF attribute_name LIKE "l%name" THEN
+		SET	@attribute_name="last_name";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+
+	SET	@query_string = CONCAT("UPDATE patron SET ", @attribute_name, "=? ", "WHERE card_number=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@new_value = new_value;
+    SET @card_number = card_number;
+	EXECUTE	stmt1 USING @new_value, @card_number;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updateProgram` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateProgram`(
+								IN name VARCHAR(255), IN branch_name VARCHAR(255), 
+                                IN attribute_name VARCHAR(255), IN new_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "%id" THEN
+		SET	@attribute_name="employee_id";
+	
+	ELSEIF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
+        
+	ELSEIF attribute_name LIKE "name" THEN
+		SET	@attribute_name="name";
+        
+	ELSEIF attribute_name LIKE "%date" THEN
+		SET	@attribute_name="start_date";
+	
+    ELSEIF attribute_name LIKE "%type" THEN
+		SET	@attribute_name="type";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+
+	SET	@query_string = CONCAT("UPDATE program SET ", @attribute_name, "=? ", "WHERE branch_name=? and name=?"); 
+	PREPARE stmt1 FROM @query_string;
+    
+	SET	@new_value = new_value;
+    SET @branch_name = branch_name;
+    SET @name = name;
+	EXECUTE	stmt1 USING @new_value, @branch_name, @name;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1305,13 +1481,35 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateRoom`(bname varchar(255), rnumber int, rcapacity int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateRoom`(
+								IN branch_name VARCHAR(255), IN room_number INT UNSIGNED, 
+                                IN attribute_name VARCHAR(255), IN new_value VARCHAR(255))
 BEGIN
-UPDATE `library_db`.`room` SET 
-`branch_name` = bname,
-`number` = rnumber,
-`capacity` = rcapacity 
-WHERE (`number` = rnumber);
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "id%" THEN
+		SET	@attribute_name="id";
+	
+	ELSEIF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
+        
+	ELSEIF attribute_name LIKE "%number" THEN
+		SET	@attribute_name="number";
+        
+	ELSEIF attribute_name LIKE "%capacity" THEN
+		SET	@attribute_name="capacity";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+
+	SET	@query_string = CONCAT("UPDATE room SET ", @attribute_name, "=? ", "WHERE branch_name=? and number=?"); 
+	PREPARE stmt1 FROM @query_string;
+    
+	SET	@new_value = new_value;
+    SET @branch_name = branch_name;
+    SET @room_number = room_number;
+	EXECUTE	stmt1 USING @new_value, @branch_name, @room_number;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1328,16 +1526,33 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateVolunteer`(IN vid int,
-IN fname varchar(255),
-IN lname varchar(255),
-IN position varchar(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateVolunteer`(
+								IN id INT UNSIGNED, 
+                                IN attribute_name VARCHAR(255), IN new_value VARCHAR(255))
 BEGIN
-UPDATE `library_db`.`volunteer` 
-SET `first_name` = fname,
-`last_name` = lname,
-`position` = position
- WHERE (`id` = vid);
+	-- conditions are use to bound possible attributes
+	IF attribute_name="id" THEN
+		SET	@attribute_name="id";
+        
+	ELSEIF attribute_name LIKE "f%name" THEN
+		SET	@attribute_name="first_name";
+        
+	ELSEIF attribute_name LIKE "l%name" THEN
+		SET	@attribute_name="last_name";
+        
+	ELSEIF attribute_name LIKE "pos%" THEN
+		SET	@attribute_name="position";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+
+	SET	@query_string = CONCAT("UPDATE volunteer SET ", @attribute_name, "=? ", "WHERE id=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@new_value = new_value;
+    SET @id = id;
+	EXECUTE	stmt1 USING @new_value, @id;
+    
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1354,4 +1569,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-06 23:52:20
+-- Dump completed on 2020-04-07 17:38:43

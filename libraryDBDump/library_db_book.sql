@@ -36,7 +36,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'The Great Gatsby','unknown'),(2,'The Grapes of Wrath','unknown'),(3,'1984','unknown'),(4,'Ulysses','unknown'),(12,'Live Love Laugh','unknown');
+INSERT INTO `book` VALUES (1,'Wolf of Wall Street','new york'),(2,'The Grapes of Wrath','unknown'),(3,'1984','unknown'),(4,'Ulysses','unknown'),(12,'Live Love Laugh','unknown');
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-06 23:52:19
+-- Dump completed on 2020-04-07 17:38:43
