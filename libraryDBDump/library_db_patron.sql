@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -23,14 +23,14 @@ DROP TABLE IF EXISTS `patron`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `patron` (
-  `card_number` int unsigned NOT NULL,
+  `card_number` int unsigned NOT NULL AUTO_INCREMENT,
   `branch_name` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`card_number`),
-  KEY `branch_name` (`branch_name`),
-  CONSTRAINT `patron_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `patron_fk_bn` (`branch_name`),
+  CONSTRAINT `patron_fk_bn` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=12348 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `patron` (
 
 LOCK TABLES `patron` WRITE;
 /*!40000 ALTER TABLE `patron` DISABLE KEYS */;
-INSERT INTO `patron` VALUES (12345,'Forest Lawn Library','Dominic','Nguyen');
+INSERT INTO `patron` VALUES (12344,'Saddletowne Library','Charles','Hunt'),(12345,'Forest Lawn Library','Dominic','Nguyen'),(12346,'Central Library','Joe','Blow'),(12347,'Central Library','Patron','McPatronFace');
 /*!40000 ALTER TABLE `patron` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-31  6:10:55
+-- Dump completed on 2020-04-06 23:52:19

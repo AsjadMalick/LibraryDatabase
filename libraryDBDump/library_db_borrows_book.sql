@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -39,7 +39,7 @@ CREATE TABLE `borrows_book` (
 
 LOCK TABLES `borrows_book` WRITE;
 /*!40000 ALTER TABLE `borrows_book` DISABLE KEYS */;
-INSERT INTO `borrows_book` VALUES (12345,1,'2010-10-12'),(12345,1,'2010-10-12');
+INSERT INTO `borrows_book` VALUES (12345,1,'2024-01-02');
 /*!40000 ALTER TABLE `borrows_book` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-31  6:10:55
+-- Dump completed on 2020-04-06 23:52:19
