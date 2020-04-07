@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `disc`;
 CREATE TABLE `disc` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `location` varchar(255) NOT NULL DEFAULT 'unknown',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -35,7 +36,7 @@ CREATE TABLE `disc` (
 
 LOCK TABLES `disc` WRITE;
 /*!40000 ALTER TABLE `disc` DISABLE KEYS */;
-INSERT INTO `disc` VALUES (1,'Test 1 '),(3,'Live Love Laugh AudioBook');
+INSERT INTO `disc` VALUES (1,'Test 1 ','unknown'),(3,'Live Love Laugh AudioBook','unknown');
 /*!40000 ALTER TABLE `disc` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-05 17:00:41
+-- Dump completed on 2020-04-06 23:52:19
