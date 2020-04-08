@@ -23,14 +23,14 @@ DROP TABLE IF EXISTS `room_reservation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room_reservation` (
-  `room_number` int unsigned NOT NULL,
-  `card_number` int unsigned NOT NULL,
+  `card_number` int unsigned DEFAULT NULL,
+  `room_id` int unsigned NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
-  KEY `room_number` (`room_number`),
+  PRIMARY KEY (`room_id`,`date`,`time`),
   KEY `card_number` (`card_number`),
-  CONSTRAINT `room_reservation_ibfk_1` FOREIGN KEY (`room_number`) REFERENCES `room` (`number`),
-  CONSTRAINT `room_reservation_ibfk_2` FOREIGN KEY (`card_number`) REFERENCES `patron` (`card_number`)
+  CONSTRAINT `room_reservation_ibfk_1` FOREIGN KEY (`card_number`) REFERENCES `patron` (`card_number`),
+  CONSTRAINT `room_reservation_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,7 +40,7 @@ CREATE TABLE `room_reservation` (
 
 LOCK TABLES `room_reservation` WRITE;
 /*!40000 ALTER TABLE `room_reservation` DISABLE KEYS */;
-INSERT INTO `room_reservation` VALUES (1,12345,'2010-10-10','12:00:00');
+INSERT INTO `room_reservation` VALUES (12345,5,'2020-05-05','01:02:00'),(12345,6,'2021-02-01','05:01:00'),(12346,5,'2020-05-05','01:01:00'),(12346,5,'2020-05-05','01:04:00'),(12346,5,'2020-05-05','01:05:00');
 /*!40000 ALTER TABLE `room_reservation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-05  4:04:01
+-- Dump completed on 2020-04-07 18:37:37
