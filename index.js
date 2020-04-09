@@ -1,8 +1,6 @@
 'use strict'
 //Define the modules we need to import
 const HAPI = require('@hapi/hapi');
-const JOI = require('@hapi/joi');
-const BOOM = require('@hapi/boom');
 const GET = require('./endPointMethods/getMethods.js');
 const POST = require('./endPointMethods/postMethods.js');
 const PUT = require('./endPointMethods/putMethods.js');

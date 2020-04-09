@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -37,6 +37,7 @@ CREATE TABLE `branch` (
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
 INSERT INTO `branch` VALUES ('Central Library','800 3 St SE Calgary Alberta T2G 2E7'),('Forest Lawn Library',' 4807 8 Ave SE, Calgary, AB T2A 4M1'),('Mt Doom','Narnia'),('new test branch','42 Baker Street'),('Saddletowne Library','7555 Falconridge Blvd NE, Calgary, AB T3J 0C9'),('Village Square Library','2623 56 St NE, Calgary, AB T1Y 6E7');
+
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,3 +51,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-04-07 18:37:38
+

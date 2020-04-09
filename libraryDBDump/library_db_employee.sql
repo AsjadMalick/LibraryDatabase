@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -32,6 +32,7 @@ CREATE TABLE `employee` (
   KEY `branch_name` (`branch_name`),
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +42,7 @@ CREATE TABLE `employee` (
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
 INSERT INTO `employee` VALUES ('SaddleTowne Library',1,'Donald','Donald','Booomer'),('Forest Lawn Library',2,'Dominic','Nguyen','Janitor'),('Forest Lawn Library',3,'Joe','Blow','Supervisor'),('Saddletowne Library',4,'Bill','Clinton','Janitor');
+
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,3 +56,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-04-07 18:37:38
+

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -31,6 +31,7 @@ CREATE TABLE `patron` (
   KEY `patron_fk_bn` (`branch_name`),
   CONSTRAINT `patron_fk_bn` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=42070 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +41,7 @@ CREATE TABLE `patron` (
 LOCK TABLES `patron` WRITE;
 /*!40000 ALTER TABLE `patron` DISABLE KEYS */;
 INSERT INTO `patron` VALUES (12345,'Forest Lawn Library','Dominic','Nguyen'),(12346,'Central Library','Joe','Blow'),(12347,'Central Library','Patron','McPatronFace'),(42069,'Mt doom','Mickey','Mouse');
+
 /*!40000 ALTER TABLE `patron` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,3 +55,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-04-07 18:37:37
+

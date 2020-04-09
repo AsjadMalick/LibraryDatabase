@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -28,6 +28,7 @@ CREATE TABLE `disc` (
   `location` varchar(255) NOT NULL DEFAULT 'unknown',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +38,7 @@ CREATE TABLE `disc` (
 LOCK TABLES `disc` WRITE;
 /*!40000 ALTER TABLE `disc` DISABLE KEYS */;
 INSERT INTO `disc` VALUES (1,'Test 1 ','unknown'),(23,'Dummies for dummies','Sunridge Mall');
+
 /*!40000 ALTER TABLE `disc` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,3 +52,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-04-07 18:37:37
+

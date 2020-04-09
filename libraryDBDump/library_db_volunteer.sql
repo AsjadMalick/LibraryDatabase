@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -38,6 +38,7 @@ CREATE TABLE `volunteer` (
 LOCK TABLES `volunteer` WRITE;
 /*!40000 ALTER TABLE `volunteer` DISABLE KEYS */;
 INSERT INTO `volunteer` VALUES (2,'Susan','Baker','Checkout'),(3,'Carl','Garcia','Event Coordinator'),(6,'Hubba','Bubba','Organizer'),(7,'Hubba','Bubba','sorter');
+
 /*!40000 ALTER TABLE `volunteer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,3 +52,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-04-07 18:37:38
+

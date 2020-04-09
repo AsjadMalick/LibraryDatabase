@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -31,8 +31,7 @@ CREATE TABLE `program` (
   PRIMARY KEY (`name`,`branch_name`),
   KEY `employee_id` (`employee_id`),
   KEY `branch_name` (`branch_name`),
-  CONSTRAINT `program_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
-  CONSTRAINT `program_ibfk_2` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
+  CONSTRAINT `program_fk_bn` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,6 +42,7 @@ CREATE TABLE `program` (
 LOCK TABLES `program` WRITE;
 /*!40000 ALTER TABLE `program` DISABLE KEYS */;
 INSERT INTO `program` VALUES ('Hand Washing Seminar',2,'Saddletowne library','2021-02-02','educational'),('Reading Buddies',1,'Forest Lawn Library','2019-10-10','repeating');
+
 /*!40000 ALTER TABLE `program` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,3 +56,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-04-07 18:37:38
+

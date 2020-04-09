@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -23,13 +23,14 @@ DROP TABLE IF EXISTS `room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `branch_name` varchar(255) NOT NULL,
   `number` int unsigned NOT NULL,
-  `capacity` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`number`),
-  KEY `branch_name` (`branch_name`),
+  `capacity` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_branch_name_and_room_number` (`branch_name`,`number`),
   CONSTRAINT `room_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +39,7 @@ CREATE TABLE `room` (
 
 LOCK TABLES `room` WRITE;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` VALUES ('Village Square Library',1,30),('Saddletowne Library',4,30);
+INSERT INTO `room` VALUES (1,'Village Square Library',1,30),(2,'Saddletowne Library',4,30),(6,'new test branch',23,42);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-05  4:04:02
+-- Dump completed on 2020-04-06 23:52:20
