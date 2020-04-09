@@ -27,7 +27,8 @@ CREATE TABLE `disc` (
   `name` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL DEFAULT 'unknown',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +37,8 @@ CREATE TABLE `disc` (
 
 LOCK TABLES `disc` WRITE;
 /*!40000 ALTER TABLE `disc` DISABLE KEYS */;
-INSERT INTO `disc` VALUES (1,'Test 1 ','unknown'),(3,'Live Love Laugh AudioBook','unknown');
+INSERT INTO `disc` VALUES (1,'Test 1 ','unknown'),(23,'Dummies for dummies','Sunridge Mall');
+
 /*!40000 ALTER TABLE `disc` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +51,5 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-06 23:52:19
+-- Dump completed on 2020-04-07 18:37:37
+

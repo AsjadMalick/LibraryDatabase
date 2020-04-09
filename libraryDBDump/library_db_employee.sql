@@ -31,7 +31,8 @@ CREATE TABLE `employee` (
   PRIMARY KEY (`id`),
   KEY `branch_name` (`branch_name`),
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,8 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES ('Forest Lawn Library',1,'John','Smith','Manager'),('Forest Lawn Library',2,'Dominic','Nguyen','Janitor'),('Forest Lawn Library',3,'Joe','Blow','Supervisor'),('Saddletowne Library',4,'Bill','Clinton','Janitor'),('Forest Lawn Library',5,'Mike','Hunt','Sanitation Engineer');
+INSERT INTO `employee` VALUES ('SaddleTowne Library',1,'Donald','Donald','Booomer'),('Forest Lawn Library',2,'Dominic','Nguyen','Janitor'),('Forest Lawn Library',3,'Joe','Blow','Supervisor'),('Saddletowne Library',4,'Bill','Clinton','Janitor');
+
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +55,5 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-06 23:52:20
+-- Dump completed on 2020-04-07 18:37:38
+
