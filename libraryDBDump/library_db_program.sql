@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `program`;
 CREATE TABLE `program` (
   `name` varchar(255) NOT NULL,
   `employee_id` int unsigned DEFAULT NULL,
-  `branch_name` varchar(255) DEFAULT NULL,
-  `date` date DEFAULT NULL,
+  `branch_name` varchar(255) NOT NULL,
+  `start_date` date DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`name`),
+  PRIMARY KEY (`name`,`branch_name`),
   KEY `employee_id` (`employee_id`),
   KEY `branch_name` (`branch_name`),
   CONSTRAINT `program_fk_bn` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
@@ -41,7 +41,7 @@ CREATE TABLE `program` (
 
 LOCK TABLES `program` WRITE;
 /*!40000 ALTER TABLE `program` DISABLE KEYS */;
-INSERT INTO `program` VALUES ('Hand Washing Seminar',1,'Central Library','2020-02-02','Seminar'),('Reading Buddies',1,'Forest Lawn Library','2019-10-10','repeating');
+INSERT INTO `program` VALUES ('Hand Washing Seminar',2,'Saddletowne library','2021-02-02','educational'),('Reading Buddies',1,'Forest Lawn Library','2019-10-10','repeating'),('Test',NULL,'Central LIbrary','2020-02-02',NULL);
 /*!40000 ALTER TABLE `program` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-06 23:52:19
+-- Dump completed on 2020-04-10 16:38:15

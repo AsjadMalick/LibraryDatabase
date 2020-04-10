@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `volunteers_at`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `volunteers_at` (
-  `volunteer_id` int unsigned NOT NULL,
+  `id` int unsigned NOT NULL,
   `program_name` varchar(255) NOT NULL,
-  KEY `volunteer_id` (`volunteer_id`),
+  PRIMARY KEY (`id`,`program_name`),
   KEY `program_name` (`program_name`),
-  CONSTRAINT `volunteers_at_ibfk_1` FOREIGN KEY (`volunteer_id`) REFERENCES `volunteer` (`id`),
+  CONSTRAINT `volunteers_at_ibfk_1` FOREIGN KEY (`id`) REFERENCES `volunteer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `volunteers_at_ibfk_2` FOREIGN KEY (`program_name`) REFERENCES `program` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,6 +38,7 @@ CREATE TABLE `volunteers_at` (
 
 LOCK TABLES `volunteers_at` WRITE;
 /*!40000 ALTER TABLE `volunteers_at` DISABLE KEYS */;
+INSERT INTO `volunteers_at` VALUES (2,'reading buddies');
 /*!40000 ALTER TABLE `volunteers_at` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-06 23:52:19
+-- Dump completed on 2020-04-10 16:38:16
