@@ -15,7 +15,7 @@ module.exports = {
             method: 'GET',
             path: '/dbTest',
             handler: async (request, h) => {
-                var result = await db.callStored('get_all_branches');
+                var result = await db.callStored('getAllBranches');
                 return result;
             }
         },
@@ -23,7 +23,7 @@ module.exports = {
             method: 'GET',
             path: '/getBranchInfo',
             handler: async (request, h) => {
-                var result = await db.callStored('get_all_branches');
+                var result = await db.callStored('getAllBranches');
                 return result;
             }
         },
