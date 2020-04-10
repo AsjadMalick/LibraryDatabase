@@ -42,7 +42,6 @@ CREATE TABLE `program` (
 LOCK TABLES `program` WRITE;
 /*!40000 ALTER TABLE `program` DISABLE KEYS */;
 INSERT INTO `program` VALUES ('Hand Washing Seminar',2,'Saddletowne library','2021-02-02','educational'),('Reading Buddies',1,'Forest Lawn Library','2019-10-10','repeating');
-
 /*!40000 ALTER TABLE `program` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,5 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-07 18:37:38
-
+-- Dump completed on 2020-04-09 19:55:23

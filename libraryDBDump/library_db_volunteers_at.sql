@@ -38,6 +38,7 @@ CREATE TABLE `volunteers_at` (
 
 LOCK TABLES `volunteers_at` WRITE;
 /*!40000 ALTER TABLE `volunteers_at` DISABLE KEYS */;
+INSERT INTO `volunteers_at` VALUES (2,'reading buddies');
 /*!40000 ALTER TABLE `volunteers_at` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,5 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-07 18:37:38
-
+-- Dump completed on 2020-04-09 19:55:24
