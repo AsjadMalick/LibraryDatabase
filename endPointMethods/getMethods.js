@@ -64,7 +64,7 @@ const getVolunteerInfo = async function(request) {
             var valueToTest = request.query.value;
 
             //Validate the input against the idNumbers in the schema object
-            var isValid = errorMSG.validateInput({'idNumbers': valueToTest});
+            var isValid = errorMSG.validateInput({'numeric': valueToTest});
             if(isValid === true) {
                 //This is just how i defined the method, its scaleable to multiple 
                 //Call the method

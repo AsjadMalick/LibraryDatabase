@@ -3,27 +3,40 @@ const BOOM = require('@hapi/boom');
 
 module.exports = {
     schema: JOI.object({
-        humanName: JOI.string()
+        alphaWithSpace: JOI.string()
             .regex(/^[a-zA-Z ]+/)
             .min(1)
             .max(90),
+
+        alphaNumericWithSpace: JOI.string()
+            .regex(/^[a-zA-Z0-9 ]+/)
+            .min(1)
+            .max(90),
+
         jobPosition: JOI.string()
             .regex(/^[a-zA-Z ]+/)
             .min(1)
             .max(90),
+
         mediaName: JOI.string()
             .regex(/^[a-zA-Z0-9:_ ]+/)
             .min(1)
             .max(90),
+
         branchName: JOI.string()
             .regex(/^[a-zA-Z ]+/)
             .min(1)
             .max(90),
+
         address: JOI.string()
             .regex(/^[a-zA-Z0-9, ]+/)
             .min(1)
             .max(90),
-        idNumbers: JOI.number().integer().min(0),
+
+        numeric: JOI.number()
+            .integer()
+            .min(0)
+            .max(90),
     }),
 
     MESSAGES: {
