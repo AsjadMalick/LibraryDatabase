@@ -37,8 +37,7 @@ module.exports = {
         let sqlParams = '';
 
         for(var i = 0; i < arrayOfParams.length; i++) {
-            //console.log(arrayOfParams[i]);
-            sqlParams = sqlParams + '"' + arrayOfParams[i] + '"';
+            sqlParams = sqlParams + arrayOfParams[i];
             if(i != arrayOfParams.length - 1) {
                 sqlParams = sqlParams + ',';
             }

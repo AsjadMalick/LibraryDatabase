@@ -47,6 +47,9 @@ module.exports = {
         invalidAddress: "Address can only be alpha numeric strings with spaces\n",
         invalidDate: "Date must be in YYYY/MM/DD format\n",
         invalidIdNum: "ID must be a non negative integer\n",
+        invalidAttr: "Attr param provided does not exist\n",
+        invalidValue: "Value does not match expected regex with provided attr parameter\n",
+        malformed: "Request is malformed\n",
         noParams: "This method requires parameters\n",
     },
 
