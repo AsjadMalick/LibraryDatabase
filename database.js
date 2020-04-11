@@ -37,6 +37,7 @@ module.exports = {
         let sqlParams = '';
 
         for(var i = 0; i < arrayOfParams.length; i++) {
+            //console.log(arrayOfParams[i]);
             sqlParams = sqlParams + arrayOfParams[i];
             if(i != arrayOfParams.length - 1) {
                 sqlParams = sqlParams + ',';
@@ -53,11 +54,9 @@ module.exports = {
                 }
                 else {
                     console.log(`query ${sql} success`);
-                    //console.log("Result: %s", result);
-                    //console.log("result[0]: %s", result[0]);
                     // checks for null or undefined values
                     if (result[0] == null) {
-                        return resolve(`Query successful with results: ` + JSON.stringify(result));
+                        return resolve(`Query ${nameOfProcedure} successful with results: ` + JSON.stringify(result));
 
                     } else {
                         return resolve(result[0]);
