@@ -50,7 +50,7 @@ const runServer = async () => {
         
         console.log('Server running on %s', server.info.uri);
         console.log(`On your browser navigate to ${server.info.uri}/appTest in your browser to see if the node server is working`);
-        console.log(`On your browser navigate to ${server.info.uri}/dbTest in your browser to see if it the mySQL stored procedure is setup correctly`);
+        console.log(`On your browser navigate to ${server.info.uri}/dbTest in your browser to see if the mySQL database schema is setup correctly`);
     }
 }
 process.on('unhandledRejection', (err) => {
