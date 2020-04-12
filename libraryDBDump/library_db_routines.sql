@@ -704,6 +704,42 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getBookGenreInfo1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBookGenreInfo1`(
+								IN attribute_name VARCHAR(255), 
+                                IN attribute_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "b%id" THEN
+		SET	@attribute_name="book_id";
+        
+	ELSEIF attribute_name LIKE "%genre" THEN
+		SET	@attribute_name="genre";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+	
+	SET	@query_string = CONCAT("SELECT * FROM book_genre WHERE ", @attribute_name, "=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@attribute_value = attribute_value;
+	EXECUTE	stmt1 USING @attribute_value;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getBookInfo1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -722,11 +758,12 @@ BEGIN
 	IF attribute_name LIKE "id%" THEN
 		SET	@attribute_name="id";
         
+	ELSEIF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
+        
 	ELSEIF attribute_name LIKE "%name" THEN
 		SET	@attribute_name="name";
         
-	ELSEIF attribute_name LIKE "loc%" THEN
-		SET	@attribute_name="location";
 	ELSE
 		SET	@attribute_name="";
 	END IF;
@@ -856,6 +893,84 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getBorrowsBookInfo1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBorrowsBookInfo1`(
+								IN attribute_name VARCHAR(255), 
+                                IN attribute_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "b%id%" THEN
+		SET	@attribute_name="book_id";
+        
+	ELSEIF attribute_name LIKE "c%number" THEN
+		SET	@attribute_name="card_number";
+        
+	ELSEIF attribute_name LIKE "%date" OR attribute_name LIKE "due%" THEN
+		SET	@attribute_name="due";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+	
+	SET	@query_string = CONCAT("SELECT * FROM borrows_book WHERE ", @attribute_name, "=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@attribute_value = attribute_value;
+	EXECUTE	stmt1 USING @attribute_value;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getBorrowsDiscInfo1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBorrowsDiscInfo1`(
+								IN attribute_name VARCHAR(255), 
+                                IN attribute_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "d%id%" THEN
+		SET	@attribute_name="disc_id";
+        
+	ELSEIF attribute_name LIKE "c%number" THEN
+		SET	@attribute_name="card_number";
+        
+	ELSEIF attribute_name LIKE "%date" OR attribute_name LIKE "due%" THEN
+		SET	@attribute_name="due";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+	
+	SET	@query_string = CONCAT("SELECT * FROM borrows_disc WHERE ", @attribute_name, "=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@attribute_value = attribute_value;
+	EXECUTE	stmt1 USING @attribute_value;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getBranchInfo1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -940,6 +1055,42 @@ BEGIN
 			END) as output
     FROM	branch as b
 	WHERE	b.name=name;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getDiscGenreInfo1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getDiscGenreInfo1`(
+								IN attribute_name VARCHAR(255), 
+                                IN attribute_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "%id" THEN
+		SET	@attribute_name="disc_id";
+        
+	ELSEIF attribute_name LIKE "%genre" THEN
+		SET	@attribute_name="genre";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+	
+	SET	@query_string = CONCAT("SELECT * FROM disc_genre WHERE ", @attribute_name, "=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@attribute_value = attribute_value;
+	EXECUTE	stmt1 USING @attribute_value;
+    
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1071,6 +1222,91 @@ BEGIN
 			END) as output
     FROM	disc as d
 	WHERE	d.name=name;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeById`(id int)
+BEGIN
+SELECT * FROM library_db.employee
+where employee.id = id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeByName` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeByName`(fname varchar(255), lname varchar(255))
+BEGIN
+SELECT * FROM library_db.employee
+where employee.first_name = fname AND employee.last_name = lname;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeInfo1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeInfo1`(
+								IN attribute_name VARCHAR(255), 
+                                IN attribute_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "id%" THEN
+		SET	@attribute_name="id";
+        
+	ELSEIF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
+        
+	ELSEIF attribute_name LIKE "f%name" THEN
+		SET	@attribute_name="first_name";
+        
+	ELSEIF attribute_name LIKE "l%name" THEN
+		SET	@attribute_name="last_name";
+        
+	ELSEIF attribute_name LIKE "pos%" THEN
+		SET	@attribute_name="position";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+	
+	SET	@query_string = CONCAT("SELECT * FROM employee WHERE ", @attribute_name, "=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@attribute_value = attribute_value;
+	EXECUTE	stmt1 USING @attribute_value;
+    
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1735,6 +1971,48 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getRoomReservationInfo1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getRoomReservationInfo1`(
+								IN attribute_name VARCHAR(255), 
+                                IN attribute_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "c%number" THEN
+		SET	@attribute_name="card_number";
+
+	ELSEIF attribute_name LIKE "r%id%" THEN
+		SET	@attribute_name="room_id";
+        
+	ELSEIF attribute_name LIKE "%date" THEN
+		SET	@attribute_name="date";
+        
+	ELSEIF attribute_name LIKE "%time" THEN
+		SET	@attribute_name="time";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+	
+	SET	@query_string = CONCAT("SELECT * FROM room_reservation WHERE ", @attribute_name, "=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@attribute_value = attribute_value;
+	EXECUTE	stmt1 USING @attribute_value;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getVolunteerById` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1939,6 +2217,42 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getVolunteersAtInfo1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteersAtInfo1`(
+								IN attribute_name VARCHAR(255), 
+                                IN attribute_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "%id" THEN
+		SET	@attribute_name="id";
+        
+	ELSEIF attribute_name LIKE "p%name" THEN
+		SET	@attribute_name="program_name";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+	
+	SET	@query_string = CONCAT("SELECT * FROM volunteers_at WHERE ", @attribute_name, "=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@attribute_value = attribute_value;
+	EXECUTE	stmt1 USING @attribute_value;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `reserveRoom` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2038,6 +2352,26 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `test_proc` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `test_proc`()
+BEGIN
+	SELECT * FROM library_db.branch;
+    select * from library_db.book;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `updateBook` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2056,12 +2390,12 @@ BEGIN
 	IF attribute_name LIKE "%id%" THEN
 		SET	@attribute_name="id";
 	
+  ELSEIF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
+        
 	ELSEIF attribute_name LIKE "%name" THEN
 		SET	@attribute_name="name";
-        
-	ELSEIF attribute_name LIKE "%location" THEN
-		SET	@attribute_name="location";
-        
+	
 	ELSE
 		SET	@attribute_name="";
 	END IF;
@@ -2392,4 +2726,5 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-10 16:38:16
+-- Dump completed on 2020-04-11 20:36:23
+
