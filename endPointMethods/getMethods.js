@@ -94,7 +94,7 @@ const validateAnyAttributeAs = function(attrName, attrValue) {
     var isValid = false;
     var arrayOfSingleVal = [];
 
-    if(attrName === 'bname') {   
+    if(['bname', 'location'].indexOf(attrName) >= 0) {   
         isValid = errorMSG.validateInput({'branchName': attrValue});
         arrayOfSingleVal = [`"${attrName}"`, `"${attrValue}"`];
     }
@@ -116,6 +116,10 @@ const validateAnyAttributeAs = function(attrName, attrValue) {
     }
     else if (attrName === 'date') {
         isValid = errorMSG.validateInput({'dateFormat': attrValue});
+        arrayOfSingleVal = [`"${attrName}"`, `"${attrValue}"`];
+    }
+    else if(attrName === 'title') {
+        isValid = errorMSG.validateInput({'mediaName': attrValue});
         arrayOfSingleVal = [`"${attrName}"`, `"${attrValue}"`];
     }
     return [isValid, arrayOfSingleVal];
