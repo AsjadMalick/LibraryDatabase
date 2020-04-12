@@ -1313,6 +1313,91 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeById`(id int)
+BEGIN
+SELECT * FROM library_db.employee
+where employee.id = id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeByName` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeByName`(fname varchar(255), lname varchar(255))
+BEGIN
+SELECT * FROM library_db.employee
+where employee.first_name = fname AND employee.last_name = lname;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeInfo1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeInfo1`(
+								IN attribute_name VARCHAR(255), 
+                                IN attribute_value VARCHAR(255))
+BEGIN
+	-- conditions are use to bound possible attributes
+	IF attribute_name LIKE "id%" THEN
+		SET	@attribute_name="id";
+        
+	ELSEIF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
+        
+	ELSEIF attribute_name LIKE "f%name" THEN
+		SET	@attribute_name="first_name";
+        
+	ELSEIF attribute_name LIKE "l%name" THEN
+		SET	@attribute_name="last_name";
+        
+	ELSEIF attribute_name LIKE "pos%" THEN
+		SET	@attribute_name="position";
+        
+	ELSE
+		SET	@attribute_name="";
+	END IF;
+	
+	SET	@query_string = CONCAT("SELECT * FROM employee WHERE ", @attribute_name, "=?"); 
+	PREPARE stmt1 FROM @query_string;
+	SET	@attribute_value = attribute_value;
+	EXECUTE	stmt1 USING @attribute_value;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getEmployeeInfo_byBranchName` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2305,7 +2390,7 @@ BEGIN
 	IF attribute_name LIKE "%id%" THEN
 		SET	@attribute_name="id";
 	
-    ELSEIF attribute_name LIKE "b%name" THEN
+  ELSEIF attribute_name LIKE "b%name" THEN
 		SET	@attribute_name="branch_name";
         
 	ELSEIF attribute_name LIKE "%name" THEN
@@ -2642,3 +2727,4 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-04-11 20:36:23
+
