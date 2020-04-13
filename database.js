@@ -50,6 +50,7 @@ module.exports = {
             module.exports.dbConnection.query(sql, true, function (err, result) {
                 if (err) {
                     console.log(`query ${sql} failed`);
+                    console.log(err);
                     return reject(err);
                 }
                 else {
