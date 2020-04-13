@@ -41,7 +41,7 @@ module.exports = {
             .max(90),
 
         address: JOI.string()
-            .regex(/^[a-zA-Z0-9, ]+$/)
+            .regex(/^[a-zA-Z0-9,\- ]+$/)
             .min(1)
             .max(90),
 
@@ -68,7 +68,7 @@ module.exports = {
         invalidAddress: "Address can only be alpha numeric strings with spaces\n",
         invalidDate: "Date must be in YYYY-MM-DD format\n",
         invalidIdNum: "ID must be a non negative integer\n",
-        invalidAttr: "Attr param provided does not exist\n",
+        invalidAttr: "Attr parameter provided does not exist\n",
         invalidValue: "Value does not match expected regex with provided attr parameter\n",
         malformed: "Request is malformed\n",
         noParams: "This method requires parameters\n",

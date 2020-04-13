@@ -226,7 +226,7 @@ const createEmployee = async function (request) {
 
 
     } else {
-        var errMsg = `createEmployee procedure requires 'branchName', 'roomNumber', and 'capacity' parameters to create a room entry.`;
+        var errMsg = `createEmployee procedure requires 'branchName', 'firstName', 'lastName' and 'position' parameters to add new employee.`;
         return errorMSG.httpValidationErrorMessage(errMsg);
     }
 };
