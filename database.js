@@ -37,7 +37,7 @@ module.exports = {
         let sqlParams = '';
 
         for(var i = 0; i < arrayOfParams.length; i++) {
-            console.log(arrayOfParams[i]);
+            //console.log(arrayOfParams[i]);
             sqlParams = sqlParams + arrayOfParams[i];
             if(i != arrayOfParams.length - 1) {
                 sqlParams = sqlParams + ',';
@@ -48,13 +48,19 @@ module.exports = {
         //return a promise that a value will eventually come back
         return new Promise((resolve, reject) => {
             module.exports.dbConnection.query(sql, true, function (err, result) {
-                if(err) {
+                if (err) {
                     console.log(`query ${sql} failed`);
                     return reject(err);
                 }
                 else {
                     console.log(`query ${sql} success`);
-                    return resolve(result[0]);
+                    // checks for null or undefined values
+                    if (result[0] == null) {
+                        return resolve(`Query ${nameOfProcedure} successful with results: ` + JSON.stringify(result));
+
+                    } else {
+                        return resolve(result[0]);
+                    }
                 }
             });
 

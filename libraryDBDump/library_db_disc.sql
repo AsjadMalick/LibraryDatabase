@@ -25,10 +25,11 @@ DROP TABLE IF EXISTS `disc`;
 CREATE TABLE `disc` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `location` varchar(255) NOT NULL DEFAULT 'unknown',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+  `branch_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `branch_name` (`branch_name`),
+  CONSTRAINT `disc_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,8 +38,7 @@ CREATE TABLE `disc` (
 
 LOCK TABLES `disc` WRITE;
 /*!40000 ALTER TABLE `disc` DISABLE KEYS */;
-INSERT INTO `disc` VALUES (1,'Test 1 ','unknown'),(23,'Dummies for dummies','Sunridge Mall');
-
+INSERT INTO `disc` VALUES (1,'Test 1 ',NULL),(23,'Dummies for dummies',NULL),(24,'Post Man Audio',NULL),(25,'something',NULL),(26,'Post Man Audio2','saddletowne library'),(27,'Post Man 45','saddletowne library');
 /*!40000 ALTER TABLE `disc` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,5 +51,5 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-07 18:37:37
+-- Dump completed on 2020-04-11 20:36:22
 

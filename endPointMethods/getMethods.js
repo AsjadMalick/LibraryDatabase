@@ -15,15 +15,23 @@ module.exports = {
             method: 'GET',
             path: '/dbTest',
             handler: async (request, h) => {
-                var result = await db.callStored('get_all_branches');
+                var result = await db.callStored('getAllBranches');
                 return result;
             }
         },
         {
             method: 'GET',
-            path: '/getBranchInfo',
+            path: '/getBranch',
             handler: async (request, h) => {
-                var result = await db.callStored('get_all_branches');
+                var result = await getBranchInfo(request);
+                return result;
+            }
+        },
+        {
+            method: 'GET',
+            path: '/getEmployee',
+            handler: async (request, h) => {
+                var result = await getEmployeeInfo(request);
                 return result;
             }
         },
@@ -35,6 +43,46 @@ module.exports = {
                 return result;
             }
         },
+        {
+            method: 'GET',
+            path: '/getPatron',
+            handler: async (request, h) => {
+                var result = await getPatronInfo(request);
+                return result;
+            }
+        },
+        {
+            method: 'GET',
+            path: '/getProgram',
+            handler: async (request, h) => {
+                var result = await getProgramInfo(request);
+                return result;
+            }
+        },
+        {
+            method: 'GET',
+            path: '/getRoom',
+            handler: async (request, h) => {
+                var result = await getRoomInfo(request);
+                return result;
+            }
+        },
+        {
+            method: 'GET',
+            path: '/getBook',
+            handler: async (request, h) => {
+                var result = await getMediaInfo(request, 'book');
+                return result;
+            }
+        },
+        {
+            method: 'GET',
+            path: '/getDisc',
+            handler: async (request, h) => {
+                var result = await getMediaInfo(request, 'disc');
+                return result;
+            }
+        }
     ]
 };
 
@@ -42,48 +90,273 @@ const getTestServerStuff = function() {
     return 'If you can read this the server is setup correctly';
 };
 
-//At the time of making the code findVolunteer only had an id version
-//************************THE ASYNC KEYWORD IS VERY IMPORTANT**************************************
-const getVolunteerInfo = async function(request) {
-    
-    //This is to just test the string easily, if the length is 2 or less it means the string is {} i.e no params passed
+const validateAnyAttributeAs = function(attrName, attrValue) {
+    var isValid = false;
+    var arrayOfSingleVal = [];
+
+    if(['bname', 'location'].indexOf(attrName) >= 0) {   
+        isValid = errorMSG.validateInput({'branchName': attrValue});
+        arrayOfSingleVal = [`"${attrName}"`, `"${attrValue}"`];
+    }
+    else if(attrName === 'addr') {
+        isValid = errorMSG.validateInput({'address': attrValue});
+        arrayOfSingleVal = [`"${attrName}"`, `"${attrValue}"`];
+    }
+    else if (['id', 'eid', 'number', 'capacity'].indexOf(attrName) >= 0) {
+        isValid = errorMSG.validateInput({'numeric': attrValue});
+        arrayOfSingleVal = [`"${attrName}"`, attrValue];
+    }
+    else if (['fname', 'lname', 'name', 'type'].indexOf(attrName) >= 0) {
+        isValid = errorMSG.validateInput({'alphaWithSpace': attrValue});
+        arrayOfSingleVal = [`"${attrName}"`,`"${attrValue}"`];
+    }
+    else if (attrName === 'pos') {
+        isValid = errorMSG.validateInput({'jobPosition': attrValue});
+        arrayOfSingleVal = [`"${attrName}"`, `"${attrValue}"`];
+    }
+    else if (attrName === 'date') {
+        isValid = errorMSG.validateInput({'dateFormat': attrValue});
+        arrayOfSingleVal = [`"${attrName}"`, `"${attrValue}"`];
+    }
+    else if(attrName === 'title') {
+        isValid = errorMSG.validateInput({'mediaName': attrValue});
+        arrayOfSingleVal = [`"${attrName}"`, `"${attrValue}"`];
+    }
+    return [isValid, arrayOfSingleVal];
+}
+
+const getBranchInfo = async function (request) {
     var stringifiedQuery = JSON.stringify(request.query);
 
-    //Empty JSON note JS does lazy evaluation, and thats taken fully advantage of here
-    //The first check is to see the length of the string as mentioned above
-    //The next check is to see if a attr variable is in the query (note the !! is important)
-    //The final check is to see if a value variable is in the query (note the !! is important)
     if(stringifiedQuery.length > 2 && !!request.query.attr && !!request.query.value) {
 
-        //Get the attribute to search by
-        var attributeToSearchBY = request.query.attr;
+        var attributeToSearchBy = request.query.attr;
+        var valueToTest = request.query.value;
+        var arrayOfSingleVal = [];
+        var isValid = false;
 
-        //If we need to search by id
-        if(attributeToSearchBY === 'id') {
-            //Get the value we need to test, we know it must be validated against id
-            var valueToTest = request.query.value;
-
-            //Validate the input against the idNumbers in the schema object
-            var isValid = errorMSG.validateInput({'idNumbers': valueToTest});
-            if(isValid === true) {
-                //This is just how i defined the method, its scaleable to multiple 
-                //Call the method
-                var arrayOfSingleVal = [valueToTest];
-                var result = await db.callStored('findVolunteer', arrayOfSingleVal);
-                return result;
-            }
-            else {
-                return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidIdNum);
-            }
+        if(['bname', 'addr'].indexOf(attributeToSearchBy) >= 0) {   
+            var validationResult = validateAnyAttributeAs(attributeToSearchBy, valueToTest);
+            isValid = validationResult[0];
+            arrayOfSingleVal = validationResult[1];
         }
         else {
-            return 'cant handle this yet fam until method implemented on sql side';
+            return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidAttr);
         }
+
+        var valToReturn = isValid ? 
+                        await db.callStored('getBranchInfo1', arrayOfSingleVal) : 
+                        errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+        return valToReturn;
+       
+    }
+    else if(stringifiedQuery.length === 2) {
+        return await db.callStored('getAllBranches', []);
     }
     else {
-        // This is where we do the select all version of the method call
-        // But demonstrating the error message handling
-        var errMsg = `${errorMSG.MESSAGES.noParams}Need 'attr' parameter and 'value parameter'`;
-        return errorMSG.httpValidationErrorMessage(errMsg);
+        return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
     }
 };
+
+const getEmployeeInfo = async function(request) {
+    var stringifiedQuery = JSON.stringify(request.query);
+
+    if(stringifiedQuery.length > 2 && !!request.query.attr && !!request.query.value) {
+
+        var attributeToSearchBy = request.query.attr;
+        var valueToTest = request.query.value;
+        var arrayOfSingleVal = [];
+        var isValid = false;
+
+        if (['id', 'lname', 'fname', 'bname', 'pos'].indexOf(attributeToSearchBy) >= 0) {
+            var validationResult = validateAnyAttributeAs(attributeToSearchBy, valueToTest);
+            isValid = validationResult[0];
+            arrayOfSingleVal = validationResult[1];
+        }
+        else {
+            return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidAttr);
+        }
+
+        var valToReturn = isValid ? 
+                        await db.callStored('getEmployeeInfo1', arrayOfSingleVal) : 
+                        errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+        return valToReturn;
+       
+    }
+    else if(stringifiedQuery.length === 2) {
+        return await db.callStored('getAllEmployees', []);
+    }
+    else {
+        return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
+    }
+};
+
+const getVolunteerInfo = async function(request) {
+  
+    var stringifiedQuery = JSON.stringify(request.query);
+
+    if(stringifiedQuery.length > 2 && !!request.query.attr && !!request.query.value) {
+
+        var attributeToSearchBy = request.query.attr;
+        var valueToTest = request.query.value;
+        var arrayOfSingleVal = [];
+        var isValid = false;
+
+        if(['id', 'lname', 'fname', 'pos'].indexOf(attributeToSearchBy) >= 0) {   
+            var validationResult = validateAnyAttributeAs(attributeToSearchBy, valueToTest);
+            isValid = validationResult[0];
+            arrayOfSingleVal = validationResult[1];
+        }
+        else {
+            return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidAttr);
+        }
+
+        var valToReturn = isValid ? 
+                        await db.callStored('getVolunteerInfo1', arrayOfSingleVal) : 
+                        errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+        return valToReturn;
+       
+    }
+    else if(stringifiedQuery.length === 2) {
+        return await db.callStored('getAllVolunteers', []);
+    }
+    else {
+        return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
+    }
+};
+
+const getPatronInfo = async function(request) {
+    var stringifiedQuery = JSON.stringify(request.query);
+
+    if(stringifiedQuery.length > 2 && !!request.query.attr && !!request.query.value) {
+
+        var attributeToSearchBy = request.query.attr;
+        var valueToTest = request.query.value;
+        var arrayOfSingleVal = [];
+        var isValid = false;
+
+        if(['id', 'lname', 'fname', 'bname'].indexOf(attributeToSearchBy) >= 0 ) {   
+            var validationResult = validateAnyAttributeAs(attributeToSearchBy, valueToTest);
+            isValid = validationResult[0];
+            arrayOfSingleVal = validationResult[1];
+        }
+        else {
+            return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidAttr);
+        }
+
+        var valToReturn = isValid ? 
+                        await db.callStored('getPatronInfo1', arrayOfSingleVal) : 
+                        errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+        return valToReturn;
+       
+    }
+    else if(stringifiedQuery.length === 2) {
+        return await db.callStored('getAllPatrons', []);
+    }
+    else {
+        return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
+    }
+}
+
+const getProgramInfo = async function(request) {
+    var stringifiedQuery = JSON.stringify(request.query);
+
+    if(stringifiedQuery.length > 2 && !!request.query.attr && !!request.query.value) {
+
+        var attributeToSearchBy = request.query.attr;
+        var valueToTest = request.query.value;
+        var arrayOfSingleVal = [];
+        var isValid = false;
+
+        if(['eid', 'name', 'bname', 'date', 'type'].indexOf(attributeToSearchBy) >= 0 ) {  
+            var validationResult = validateAnyAttributeAs(attributeToSearchBy, valueToTest);
+            isValid = validationResult[0];
+            arrayOfSingleVal = validationResult[1];
+        }
+        else {
+            return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidAttr);
+        }
+
+        var valToReturn = isValid ? 
+                        await db.callStored('getProgramInfo1', arrayOfSingleVal) : 
+                        errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+        return valToReturn;
+       
+    }
+    else if(stringifiedQuery.length === 2) {
+        return await db.callStored('getAllPrograms', []);
+    }
+    else {
+        return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
+    }
+}
+
+const getRoomInfo = async function(request) {
+    var stringifiedQuery = JSON.stringify(request.query);
+
+    if(stringifiedQuery.length > 2 && !!request.query.attr && !!request.query.value) {
+
+        var attributeToSearchBy = request.query.attr;
+        var valueToTest = request.query.value;
+        var arrayOfSingleVal = [];
+        var isValid = false;
+
+        if(['number', 'id', 'bname', 'capacity'].indexOf(attributeToSearchBy) >= 0 ) {  
+            var validationResult = validateAnyAttributeAs(attributeToSearchBy, valueToTest);
+            isValid = validationResult[0];
+            arrayOfSingleVal = validationResult[1];
+        }
+        else {
+            return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidAttr);
+        }
+
+        var valToReturn = isValid ? 
+                        await db.callStored('getRoomInfo1', arrayOfSingleVal) : 
+                        errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+        return valToReturn;
+       
+    }
+    else if(stringifiedQuery.length === 2) {
+        return await db.callStored('getAllRooms', []);
+    }
+    else {
+        return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
+    }
+}
+
+const getMediaInfo = async function (request, mediaType) {
+
+    var methodNames = mediaType === 'book' ? ['getBookInfo1', 'getAllBooks'] : ['getDiscInfo1', 'getAllDiscs']
+   
+
+    var stringifiedQuery = JSON.stringify(request.query);
+
+    if(stringifiedQuery.length > 2 && !!request.query.attr && !!request.query.value) {
+
+        var attributeToSearchBy = request.query.attr;
+        var valueToTest = request.query.value;
+        var arrayOfSingleVal = [];
+        var isValid = false;
+
+        if(['title', 'id', 'location'].indexOf(attributeToSearchBy) >= 0 ) {  
+            var validationResult = validateAnyAttributeAs(attributeToSearchBy, valueToTest);
+            isValid = validationResult[0];
+            arrayOfSingleVal = validationResult[1];
+        }
+        else {
+            return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidAttr);
+        }
+
+        var valToReturn = isValid ? 
+                        await db.callStored(methodNames[0], arrayOfSingleVal) : 
+                        errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+        return valToReturn;
+       
+    }
+    else if(stringifiedQuery.length === 2) {
+        return await db.callStored(methodNames[1], []);
+    }
+    else {
+        return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
+    }
+}
