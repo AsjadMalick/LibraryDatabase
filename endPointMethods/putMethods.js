@@ -91,6 +91,7 @@ const validateAttributeValuePair = function (attributeName, value) {
         case 'id':
         case 'eId':
         case 'number':
+        case 'capacity':
             isValid = errorMSG.validateInput({ integer: value });
             break;
         case 'address':
