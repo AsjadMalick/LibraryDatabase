@@ -133,7 +133,7 @@ const createBranch = async function(request) {
         }
 
         // invoke createBranch procedure
-        var createBranchParameters = [branchName, branchAddress];
+        var createBranchParameters = [`"${branchName}"`, `"${branchAddress}"`];
         var result = await db.callStored('createBranch', createBranchParameters);
         return result;
 

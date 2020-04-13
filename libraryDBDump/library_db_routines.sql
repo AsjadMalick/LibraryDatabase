@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: library_db
+-- Host: 127.0.0.1    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -261,7 +261,10 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteBook`(bid int)
 BEGIN
+DELETE FROM `library_db`.`borrows_book` WHERE (`book_id` = bid);
+DELETE FROM `library_db`.`book_genre` WHERE (`book_id` = bid);
 DELETE FROM `library_db`.`book` WHERE (`id` = bid);
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -280,9 +283,15 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteBranch`(bname varchar(255))
 BEGIN
-DELETE FROM `library_db`.`branch` 
-WHERE (`name` = 'Bowness Library') and 
-(`address` = bname);
+DELETE FROM `library_db`.`book` WHERE (`branch_name` = bname);
+DELETE FROM `library_db`.`disc` WHERE (`branch_name` = bname);
+DELETE FROM `library_db`.`employee` WHERE (`branch_name` = bname);
+DELETE FROM `library_db`.`patron` WHERE (`branch_name` = bname);
+DELETE FROM `library_db`.`program` WHERE (`branch_name` = bname);
+DELETE FROM `library_db`.`room` WHERE (`branch_name` = bname);
+DELETE FROM `library_db`.`branch` WHERE (`name` = bname);
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -301,6 +310,8 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteDisc`(did int)
 BEGIN
+DELETE FROM `library_db`.`borrows_disc` WHERE (`disc_id` = did);
+DELETE FROM `library_db`.`disc_genre` WHERE (`disc_id` = did);
 DELETE FROM `library_db`.`disc` WHERE (`id` = did);
 END ;;
 DELIMITER ;
@@ -320,6 +331,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteEmployee`(eid int)
 BEGIN
+DELETE FROM `library_db`.`program` WHERE (`employee_id` = eid);
 DELETE FROM `library_db`.`employee` WHERE (`id` = eid);
 END ;;
 DELIMITER ;
@@ -339,7 +351,12 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deletePatron`(cnum int)
 BEGIN
+DELETE FROM `library_db`.`room_reservation` WHERE (`card_number` = cnum);
+DELETE FROM `library_db`.`borrows_book` WHERE (`card_number` = cnum);
+DELETE FROM `library_db`.`borrows_disc` WHERE (`card_number` = cnum);
 DELETE FROM `library_db`.`patron` WHERE (`card_number` = cnum);
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -377,6 +394,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteVolunteer`(vid int)
 BEGIN
+DELETE FROM `library_db`.`volunteer_at` WHERE (`id` = vid);
 DELETE FROM `library_db`.`volunteer` WHERE (`id` = vid);
 END ;;
 DELIMITER ;
@@ -2641,4 +2659,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-12 17:58:42
+-- Dump completed on 2020-04-13  6:30:35

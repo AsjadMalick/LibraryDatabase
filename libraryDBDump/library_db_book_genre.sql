@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: library_db
+-- Host: 127.0.0.1    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -27,7 +27,7 @@ CREATE TABLE `book_genre` (
   `genre` varchar(255) NOT NULL,
   PRIMARY KEY (`genre`),
   KEY `book_id` (`book_id`),
-  CONSTRAINT `book_genre_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`)
+  CONSTRAINT `book_genre_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -37,7 +37,7 @@ CREATE TABLE `book_genre` (
 
 LOCK TABLES `book_genre` WRITE;
 /*!40000 ALTER TABLE `book_genre` DISABLE KEYS */;
-INSERT INTO `book_genre` VALUES (1,'Tragedy'),(2,'Historical Fiction'),(3,'Dystopian'),(4,'Modernism');
+INSERT INTO `book_genre` VALUES (1,'Tragedy'),(2,'Historical Fiction'),(3,'Dystopian');
 /*!40000 ALTER TABLE `book_genre` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-10 16:38:15
+-- Dump completed on 2020-04-13  6:30:33

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: library_db
+-- Host: 127.0.0.1    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -29,7 +29,7 @@ CREATE TABLE `disc` (
   PRIMARY KEY (`id`),
   KEY `branch_name` (`branch_name`),
   CONSTRAINT `disc_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `disc` (
 
 LOCK TABLES `disc` WRITE;
 /*!40000 ALTER TABLE `disc` DISABLE KEYS */;
-INSERT INTO `disc` VALUES (1,'Test 1 ',NULL),(23,'Dummies for dummies',NULL),(24,'Post Man Audio',NULL),(25,'something',NULL),(26,'Post Man Audio2','saddletowne library'),(27,'Post Man 45','saddletowne library');
+INSERT INTO `disc` VALUES (23,'Dummies for dummies',NULL),(24,'Post Man Audio',NULL),(25,'something',NULL),(26,'Post Man Audio2','saddletowne library'),(27,'Post Man 45','saddletowne library');
 /*!40000 ALTER TABLE `disc` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,5 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-11 20:36:22
-
+-- Dump completed on 2020-04-13  6:30:33
