@@ -62,6 +62,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `borrowBook`(IN bid int, IN cnum int
 BEGIN
 	INSERT INTO `library_db`.`borrows_book` (`card_number`, `book_id`, `due`) 
 	VALUES (cnum, bid, due);
+    
+    UPDATE	`library_db`.`book`
+    SET		branch_name=null
+    where	id=bid;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -82,6 +86,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `borrowDisc`(IN did int, IN cnum int
 BEGIN
 	INSERT INTO `library_db`.`borrows_disc` (`disc_id`,`card_number`,`due`) 
 	VALUES (did, cnum, due);
+    
+    UPDATE	`library_db`.`disc`
+    SET		branch_name=null
+    where	id=did;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2676,4 +2684,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-14  0:23:21
+-- Dump completed on 2020-04-14  0:33:56
