@@ -17,6 +17,7 @@ module.exports = {
             module.exports.dbConnection.connect(function(err) {
                 if (err) {
                     console.log('Could not connect to librarydb');
+                    console.log(err);
                     return reject(err);
                 }
                 else {
