@@ -214,6 +214,13 @@ const getVolunteerInfo = async function(request) {
         var valToReturn = isValid ? 
                         await db.callStored('getVolunteerInfo1', arrayOfSingleVal) : 
                         errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+
+        for(var i = 0; i < valToReturn.length; i++) {
+            var vol = valToReturn[i];
+            var newArr = ['"id"', vol.id];
+            var programs = await db.callStored('getVolunteersAtInfo1', newArr);
+            valToReturn[i].programs = programs;
+        }
         return valToReturn;
        
     }
@@ -326,7 +333,7 @@ const getRoomInfo = async function(request) {
 
 const getMediaInfo = async function (request, mediaType) {
 
-    var methodNames = mediaType === 'book' ? ['getBookInfo1', 'getAllBooks'] : ['getDiscInfo1', 'getAllDiscs']
+    var methodNames = mediaType === 'book' ? ['getBookInfo1', 'getAllBooks', 'getBookGenreInfo1'] : ['getDiscInfo1', 'getAllDiscs', 'getDiscGenreInfo1']
    
 
     var stringifiedQuery = JSON.stringify(request.query);
@@ -350,6 +357,13 @@ const getMediaInfo = async function (request, mediaType) {
         var valToReturn = isValid ? 
                         await db.callStored(methodNames[0], arrayOfSingleVal) : 
                         errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+
+        for(var i = 0; i < valToReturn.length; i++) {
+            var media = valToReturn[i];
+            var newArr = mediaType === 'book' ? ['"bid"', media.id] : ['"id"', media.id];
+            var genres = await db.callStored(methodNames[3], newArr);
+            valToReturn[i].genres = genres;
+        }
         return valToReturn;
        
     }
