@@ -225,7 +225,14 @@ const getVolunteerInfo = async function(request) {
        
     }
     else if(stringifiedQuery.length === 2) {
-        return await db.callStored('getAllVolunteers', []);
+        var valToReturn = await db.callStored('getAllVolunteers', []);
+        for(var i = 0; i < valToReturn.length; i++) {
+            var vol = valToReturn[i];
+            var newArr = ['"id"', vol.id];
+            var programs = await db.callStored('getVolunteersAtInfo1', newArr);
+            valToReturn[i].programs = programs;
+        }
+        return valToReturn;
     }
     else {
         return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
@@ -287,11 +294,40 @@ const getProgramInfo = async function(request) {
         var valToReturn = isValid ? 
                         await db.callStored('getProgramInfo1', arrayOfSingleVal) : 
                         errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.invalidValue);
+        
+
+        for(var i = 0; i < valToReturn.length; i++) {
+            var pro = valToReturn[i];
+            var newArr = ['"pname"', `"${pro.name}"`];
+            var volunteers = await db.callStored('getVolunteersAtInfo1', newArr);
+            var volunteerIdList = [];
+            for(var j = 0; j < volunteers.length; j++) {
+                var volunteer = volunteers[j];
+                if(volunteer.branch_name == pro.branch_name) {
+                    volunteerIdList.push(volunteer.id);
+                }
+            }
+            valToReturn[i].volunteers = volunteerIdList;
+        }
+        
         return valToReturn;
-       
     }
     else if(stringifiedQuery.length === 2) {
-        return await db.callStored('getAllPrograms', []);
+        var valToReturn = await db.callStored('getAllPrograms', []);
+        for(var i = 0; i < valToReturn.length; i++) {
+            var pro = valToReturn[i];
+            var newArr = ['"pname"', `"${pro.name}"`];
+            var volunteers = await db.callStored('getVolunteersAtInfo1', newArr);
+            var volunteerIdList = [];
+            for(var j = 0; j < volunteers.length; j++) {
+                var volunteer = volunteers[j];
+                if(volunteer.branch_name == pro.branch_name) {
+                    volunteerIdList.push(volunteer.id);
+                }
+            }
+            valToReturn[i].volunteers = volunteerIdList;
+        }
+        return valToReturn;
     }
     else {
         return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
@@ -361,14 +397,21 @@ const getMediaInfo = async function (request, mediaType) {
         for(var i = 0; i < valToReturn.length; i++) {
             var media = valToReturn[i];
             var newArr = mediaType === 'book' ? ['"bid"', media.id] : ['"id"', media.id];
-            var genres = await db.callStored(methodNames[3], newArr);
+            var genres = await db.callStored(methodNames[2], newArr);
             valToReturn[i].genres = genres;
         }
         return valToReturn;
        
     }
     else if(stringifiedQuery.length === 2) {
-        return await db.callStored(methodNames[1], []);
+        var valToReturn =  await db.callStored(methodNames[1], []);
+        for(var i = 0; i < valToReturn.length; i++) {
+            var media = valToReturn[i];
+            var newArr = mediaType === 'book' ? ['"bid"', media.id] : ['"id"', media.id];
+            var genres = await db.callStored(methodNames[2], newArr);
+            valToReturn[i].genres = genres;
+        }
+        return valToReturn;
     }
     else {
         return errorMSG.httpValidationErrorMessage(errorMSG.MESSAGES.malformed);
