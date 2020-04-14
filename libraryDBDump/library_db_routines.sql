@@ -283,6 +283,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteBranch`(bname varchar(255))
 BEGIN
+
 DELETE FROM `library_db`.`book` WHERE (`branch_name` = bname);
 DELETE FROM `library_db`.`disc` WHERE (`branch_name` = bname);
 DELETE FROM `library_db`.`employee` WHERE (`branch_name` = bname);
@@ -373,9 +374,12 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteProgram`(eid int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteProgram`(
+							IN branchName VARCHAR(255),
+                            IN programName VARCHAR(255))
 BEGIN
-DELETE FROM `library_db`.`program` WHERE (`employee_id` = eid);
+DELETE FROM `library_db`.`program` 
+WHERE (`name`=programName AND `branch_name`=branchName);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2659,4 +2663,6 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+
 -- Dump completed on 2020-04-13  6:30:35
+
