@@ -37,7 +37,7 @@ CREATE TABLE `book_genre` (
 
 LOCK TABLES `book_genre` WRITE;
 /*!40000 ALTER TABLE `book_genre` DISABLE KEYS */;
-INSERT INTO `book_genre` VALUES (1,'Tragedy'),(2,'Historical Fiction'),(3,'Dystopian');
+INSERT INTO `book_genre` VALUES (1,'Tragedy'),(2,'Historical Fiction'),(3,'Dystopian'),(12,'Self-help'),(14,'Tech'),(15,'Sequel');
 /*!40000 ALTER TABLE `book_genre` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-13  6:30:33
+-- Dump completed on 2020-04-13 18:09:15

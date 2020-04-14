@@ -58,10 +58,11 @@ SET character_set_client = @saved_cs_client;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `borrowBook`(IN bid int, IN cnum int, IN due date)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `borrowBook`( bid int,  cnum int,  due date)
 BEGIN
 	INSERT INTO `library_db`.`borrows_book` (`card_number`, `book_id`, `due`) 
 	VALUES (cnum, bid, due);
+    
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2659,4 +2660,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-13  6:30:35
+-- Dump completed on 2020-04-13 18:09:16

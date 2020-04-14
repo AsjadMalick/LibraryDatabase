@@ -25,7 +25,8 @@ DROP TABLE IF EXISTS `volunteers_at`;
 CREATE TABLE `volunteers_at` (
   `id` int unsigned NOT NULL,
   `program_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`,`program_name`),
+  `branch_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`,`program_name`,`branch_name`),
   KEY `program_name` (`program_name`),
   CONSTRAINT `volunteers_at_ibfk_1` FOREIGN KEY (`id`) REFERENCES `volunteer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `volunteers_at_ibfk_2` FOREIGN KEY (`program_name`) REFERENCES `program` (`name`)
@@ -38,7 +39,7 @@ CREATE TABLE `volunteers_at` (
 
 LOCK TABLES `volunteers_at` WRITE;
 /*!40000 ALTER TABLE `volunteers_at` DISABLE KEYS */;
-INSERT INTO `volunteers_at` VALUES (2,'reading buddies');
+INSERT INTO `volunteers_at` VALUES (2,'reading buddies','Village Square Library');
 /*!40000 ALTER TABLE `volunteers_at` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-13  6:30:34
+-- Dump completed on 2020-04-13 18:09:16
