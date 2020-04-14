@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: library_db
+-- Host: 127.0.0.1    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -25,8 +25,10 @@ DROP TABLE IF EXISTS `volunteers_at`;
 CREATE TABLE `volunteers_at` (
   `id` int unsigned NOT NULL,
   `program_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`,`program_name`),
+  `branch_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`,`program_name`,`branch_name`),
   KEY `program_name` (`program_name`),
+  KEY `volunteers_at_ibfk_2_idx` (`branch_name`),
   CONSTRAINT `volunteers_at_ibfk_1` FOREIGN KEY (`id`) REFERENCES `volunteer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `volunteers_at_ibfk_2` FOREIGN KEY (`program_name`) REFERENCES `program` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -38,7 +40,7 @@ CREATE TABLE `volunteers_at` (
 
 LOCK TABLES `volunteers_at` WRITE;
 /*!40000 ALTER TABLE `volunteers_at` DISABLE KEYS */;
-INSERT INTO `volunteers_at` VALUES (2,'reading buddies');
+INSERT INTO `volunteers_at` VALUES (2,'reading buddies','');
 /*!40000 ALTER TABLE `volunteers_at` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,5 +53,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-11 20:36:23
+
+-- Dump completed on 2020-04-13 19:01:10
 
