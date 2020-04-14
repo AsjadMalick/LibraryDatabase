@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: library_db
+-- Host: 127.0.0.1    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -30,7 +30,7 @@ CREATE TABLE `employee` (
   `position` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `branch_name` (`branch_name`),
-  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`)
+  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_name`) REFERENCES `branch` (`name`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,7 +40,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES ('SaddleTowne Library',1,'Donald','Donald','Booomer'),('Forest Lawn Library',2,'Dominic','Nguyen','Janitor'),('Forest Lawn Library',3,'Joe','Blow','Supervisor'),('Central Library',24,'Coder','McCoderFace','Code Monkey');
+INSERT INTO `employee` VALUES ('SaddleTowne Library',1,'Donald','Donald','Booomer'),('Forest Lawn Library',3,'Joe','Blow','Supervisor'),('Central Library',24,'Coder','McCoderFace','Code Monkey');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-10 16:38:16
+-- Dump completed on 2020-04-13  6:30:34
