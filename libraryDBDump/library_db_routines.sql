@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library_db
+-- Host: localhost    Database: library_db
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -783,7 +783,7 @@ BEGIN
 	ELSEIF attribute_name LIKE "b%name" THEN
 		SET	@attribute_name="branch_name";
         
-	ELSEIF attribute_name LIKE "%name" THEN
+	ELSEIF attribute_name LIKE "%name" OR attribute_name LIKE "%title" THEN
 		SET	@attribute_name="name";
         
 	ELSE
@@ -1136,12 +1136,13 @@ BEGIN
 	-- conditions are use to bound possible attributes
 	IF attribute_name LIKE "id%" THEN
 		SET	@attribute_name="id";
+	
+    ELSEIF attribute_name LIKE "b%name" THEN
+		SET	@attribute_name="branch_name";
         
-	ELSEIF attribute_name LIKE "%name" THEN
+	ELSEIF attribute_name LIKE "%name" OR attribute_name LIKE "%title" THEN
 		SET	@attribute_name="name";
         
-	ELSEIF attribute_name LIKE "loc%" THEN
-		SET	@attribute_name="location";
 	ELSE
 		SET	@attribute_name="";
 	END IF;
@@ -2221,10 +2222,16 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `returnBook`(IN bid int unsigned, IN cnum int unsigned)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `returnBook`(
+							IN bid int unsigned, IN cnum int unsigned,
+							IN branchName VARCHAR(255))
 BEGIN
 	DELETE FROM `library_db`.`borrows_book` WHERE 
 	(`card_number` = cnum) and (`book_id` = bid);
+    
+    UPDATE `library_db`.`book`
+    SET		`branch_name`=branchName
+    WHERE	`id`=bid;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2241,10 +2248,16 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `returnDisc`(IN did int unsigned, IN cnum int unsigned)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `returnDisc`(
+							IN did int unsigned, IN cnum int unsigned,
+							IN branchName VARCHAR(255))
 BEGIN
 	DELETE FROM `library_db`.`borrows_disc` WHERE 
 	(`card_number` = cnum) and (`disc_id` = did);
+    
+    UPDATE `library_db`.`disc`
+    SET		`branch_name`=branchName
+    WHERE	`id`=did;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2663,6 +2676,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-
--- Dump completed on 2020-04-13  6:30:35
-
+-- Dump completed on 2020-04-14  0:23:21
