@@ -5,7 +5,7 @@ Ensure mySQL is installed, with a root user that has the password 'password'. Al
 
 Also ensure node.js is installed before proceding
 
-You can use the files in libraryDBDump folder to import the schema and methods on your local MySQL instance
+You can use the files in libraryDBDump folder to import the schema and methods on your local MySQL instance. Ensure the schema name is 'library_db'
 
 # Install
 clone this repo with
