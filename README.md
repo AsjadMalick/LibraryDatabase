@@ -1,8 +1,14 @@
 # LibraryDatabase
 For the course CPSC 471 at University of Calgary, a library system database API
 
+Ensure mySQL is installed, with a root user that has the password 'password'. Also enxsure that the server is configured to use legacy authentication (MySQL 5.x compatibility). The mySQL plugin in JS requires this.
+
+Also ensure node.js is installed before proceding
+
+You can use the files in libraryDBDump folder to import the schema and methods on your local MySQL instance
+
 # Install
-Make sure you have node js installed, then clone this repo with
+clone this repo with
 ```bash
 git clone https://github.com/AsjadMalick/LibraryDatabase.git
 ```
