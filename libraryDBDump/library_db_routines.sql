@@ -62,10 +62,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `borrowBook`(IN bid int, IN cnum int
 BEGIN
 	INSERT INTO `library_db`.`borrows_book` (`card_number`, `book_id`, `due`) 
 	VALUES (cnum, bid, due);
-    
-    UPDATE	`library_db`.`book`
-    SET		branch_name=null
-    where	id=bid;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -86,10 +82,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `borrowDisc`(IN did int, IN cnum int
 BEGIN
 	INSERT INTO `library_db`.`borrows_disc` (`disc_id`,`card_number`,`due`) 
 	VALUES (did, cnum, due);
-    
-    UPDATE	`library_db`.`disc`
-    SET		branch_name=null
-    where	id=did;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -792,7 +784,7 @@ BEGIN
 	ELSEIF attribute_name LIKE "b%name" THEN
 		SET	@attribute_name="branch_name";
         
-	ELSEIF attribute_name LIKE "%name" OR attribute_name LIKE "%title" THEN
+	ELSEIF attribute_name LIKE "%name" THEN
 		SET	@attribute_name="name";
         
 	ELSE
@@ -804,120 +796,6 @@ BEGIN
 	SET	@attribute_value = attribute_value;
 	EXECUTE	stmt1 USING @attribute_value;
     
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getBookInfo_byId` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBookInfo_byId`(
-							IN attribute_name VARCHAR(255), 
-							IN id INT UNSIGNED)
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "id" then b.id
-                WHEN "book_id" then b.id
-                WHEN "book id" then b.id
-                WHEN "name" then b.name
-                WHEN "book_name" then b.name
-                WHEN "book name" then b.name
-                WHEN "location" then b.location
-			END) as output
-    FROM	book as b
-	WHERE	b.id=id;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getBookInfo_byLocation` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBookInfo_byLocation`(
-							IN attribute_name VARCHAR(255), 
-							IN location VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "id" then b.id
-                WHEN "book_id" then b.id
-                WHEN "book id" then b.id
-                WHEN "name" then b.name
-                WHEN "book_name" then b.name
-                WHEN "book name" then b.name
-                WHEN "location" then b.location
-			END) as output
-    FROM	book as b
-	WHERE	b.location=location;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getBookInfo_byName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBookInfo_byName`(
-							IN attribute_name VARCHAR(255), 
-							IN name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "id" then b.id
-                WHEN "book_id" then b.id
-                WHEN "book id" then b.id
-                WHEN "name" then b.name
-                WHEN "book_name" then b.name
-                WHEN "book name" then b.name
-                WHEN "location" then b.location
-			END) as output
-    FROM	book as b
-	WHERE	b.name=name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getBookLocations_byId` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBookLocations_byId`(IN id int unsigned)
-BEGIN
-	SELECT	location
-    FROM	book
-    WHERE	book.id=id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1038,60 +916,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getBranchInfo_byAddress` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBranchInfo_byAddress`(
-							IN attribute_name VARCHAR(255), 
-							IN address VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "name" then b.name
-                WHEN "branch_name" then b.name
-                WHEN "address" then b.address
-			END) as output
-    FROM	branch as b
-	WHERE	b.address=address;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getBranchInfo_byName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBranchInfo_byName`(
-							IN attribute_name VARCHAR(255), 
-							IN name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "name" then b.name
-                WHEN "branch_name" then b.name
-                WHEN "address" then b.address
-			END) as output
-    FROM	branch as b
-	WHERE	b.name=name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getDiscGenreInfo1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1145,13 +969,12 @@ BEGIN
 	-- conditions are use to bound possible attributes
 	IF attribute_name LIKE "id%" THEN
 		SET	@attribute_name="id";
-	
-    ELSEIF attribute_name LIKE "b%name" THEN
-		SET	@attribute_name="branch_name";
         
-	ELSEIF attribute_name LIKE "%name" OR attribute_name LIKE "%title" THEN
+	ELSEIF attribute_name LIKE "%name" THEN
 		SET	@attribute_name="name";
         
+	ELSEIF attribute_name LIKE "loc%" THEN
+		SET	@attribute_name="location";
 	ELSE
 		SET	@attribute_name="";
 	END IF;
@@ -1161,139 +984,6 @@ BEGIN
 	SET	@attribute_value = attribute_value;
 	EXECUTE	stmt1 USING @attribute_value;
     
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getDiscInfo_byId` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getDiscInfo_byId`(
-							IN attribute_name VARCHAR(255), 
-							IN id INT UNSIGNED)
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "id" then d.id
-                WHEN "disc_id" then d.id
-                WHEN "disc id" then d.id
-                WHEN "name" then d.name
-                WHEN "disc_name" then d.name
-                WHEN "disc name" then d.name
-                WHEN "location" then d.location
-			END) as output
-    FROM	disc as d
-	WHERE	d.id=id;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getDiscInfo_byLocation` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getDiscInfo_byLocation`(
-							IN attribute_name VARCHAR(255), 
-							IN location VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "id" then d.id
-                WHEN "disc_id" then d.id
-                WHEN "disc id" then d.id
-                WHEN "name" then d.name
-                WHEN "disc_name" then d.name
-                WHEN "disc name" then d.name
-                WHEN "location" then d.location
-			END) as output
-    FROM	disc as d
-	WHERE	d.location=location;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getDiscInfo_byName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getDiscInfo_byName`(
-							IN attribute_name VARCHAR(255), 
-							IN name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "id" then d.id
-                WHEN "disc_id" then d.id
-                WHEN "disc id" then d.id
-                WHEN "name" then d.name
-                WHEN "disc_name" then d.name
-                WHEN "disc name" then d.name
-                WHEN "location" then d.location
-			END) as output
-    FROM	disc as d
-	WHERE	d.name=name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeById` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeById`(id int)
-BEGIN
-SELECT * FROM library_db.employee
-where employee.id = id;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeByName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeByName`(fname varchar(255), lname varchar(255))
-BEGIN
-SELECT * FROM library_db.employee
-where employee.first_name = fname AND employee.last_name = lname;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1345,119 +1035,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeInfo_byBranchName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeInfo_byBranchName`(
-							IN attribute_name VARCHAR(255), IN branch_name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then branch_name
-                WHEN "id" then id
-                WHEN "first_name" then first_name
-                WHEN "last_name" then last_name
-                WHEN "position" then position
-			END) as output
-    FROM	employee
-	WHERE	employee.branch_name=branch_name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeInfo_byId` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeInfo_byId`(
-								IN attribute_name VARCHAR(255), IN id int unsigned)
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then branch_name
-                WHEN "id" then id
-                WHEN "first_name" then first_name
-                WHEN "last_name" then last_name
-                WHEN "position" then position
-			END) as output
-    FROM	employee
-	WHERE	employee.id=id;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeInfo_byName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeInfo_byName`(
-							IN attribute_name VARCHAR(255), 
-							IN first_name VARCHAR(255), IN last_name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then branch_name
-                WHEN "id" then id
-                WHEN "first_name" then first_name
-                WHEN "last_name" then last_name
-                WHEN "position" then position
-			END) as output
-    FROM	employee
-	WHERE	employee.first_name=first_name and employee.last_name=last_name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getEmployeeInfo_byPosition` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getEmployeeInfo_byPosition`(
-							IN attribute_name VARCHAR(255), IN position VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then branch_name
-                WHEN "id" then id
-                WHEN "first_name" then first_name
-                WHEN "last_name" then last_name
-                WHEN "position" then position
-			END) as output
-    FROM	employee
-	WHERE	employee.position=position;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getPatronInfo1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1494,88 +1071,6 @@ BEGIN
 	SET	@attribute_value = attribute_value;
 	EXECUTE	stmt1 USING @attribute_value;
     
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getPatronInfo_byBranchName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getPatronInfo_byBranchName`(
-								IN attribute_name VARCHAR(255), IN branch_name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then branch_name
-                WHEN "card_number" then card_number
-                WHEN "first_name" then first_name
-                WHEN "last_name" then last_name
-			END) as output
-    FROM	patron
-	WHERE	patron.branch_name=branch_name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getPatronInfo_byCardNumber` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getPatronInfo_byCardNumber`(
-										IN attribute_name VARCHAR(255), IN card_number int unsigned)
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then branch_name
-                WHEN "card_number" then card_number
-                WHEN "first_name" then first_name
-                WHEN "last_name" then last_name
-			END) as output
-    FROM	patron
-	WHERE	patron.card_number=card_number;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getPatronInfo_byName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getPatronInfo_byName`(
-										IN attribute_name VARCHAR(255), 
-                                        IN first_name VARCHAR(255), IN last_name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then branch_name
-                WHEN "card_number" then card_number
-                WHEN "first_name" then first_name
-                WHEN "last_name" then last_name
-			END) as output
-    FROM	patron
-	WHERE	patron.first_name=first_name and patron.last_name=last_name;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1627,166 +1122,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getProgramInfo_byBranchName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getProgramInfo_byBranchName`(
-							IN attribute_name VARCHAR(255), 
-							IN branch_name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "name" then p.name 
-				WHEN "branch_name" then p.branch_name
-                WHEN "branch name" then p.branch_name
-                WHEN "employee_id" then p.employee_id
-                WHEN "employee id" then p.employee_id
-                WHEN "id" then p.employee_id
-                WHEN "date" then p.date
-                WHEN "type" then p.type
-			END) as output
-    FROM	program as p
-	WHERE	p.branch_name=branch_name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getProgramInfo_byDate` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getProgramInfo_byDate`(
-							IN attribute_name VARCHAR(255), 
-							IN date date)
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "name" then p.name 
-				WHEN "branch_name" then p.branch_name
-                WHEN "branch name" then p.branch_name
-                WHEN "employee_id" then p.employee_id
-                WHEN "employee id" then p.employee_id
-                WHEN "id" then p.employee_id
-                WHEN "date" then p.date
-                WHEN "type" then p.type
-			END) as output
-    FROM	program as p
-	WHERE	p.date=date;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getProgramInfo_byId` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getProgramInfo_byId`(
-							IN attribute_name VARCHAR(255), 
-							IN employee_id int unsigned)
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "name" then p.name 
-				WHEN "branch_name" then p.branch_name
-                WHEN "branch name" then p.branch_name
-                WHEN "employee_id" then p.employee_id
-                WHEN "employee id" then p.employee_id
-                WHEN "id" then p.employee_id
-                WHEN "date" then p.date
-                WHEN "type" then p.type
-			END) as output
-    FROM	program as p
-	WHERE	p.employee_id=employee_id;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getProgramInfo_byName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getProgramInfo_byName`(
-							IN attribute_name VARCHAR(255), 
-							IN name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "name" then p.name 
-				WHEN "branch_name" then p.branch_name
-                WHEN "branch name" then p.branch_name
-                WHEN "employee_id" then p.employee_id
-                WHEN "employee id" then p.employee_id
-                WHEN "id" then p.employee_id
-                WHEN "date" then p.date
-                WHEN "type" then p.type
-			END) as output
-    FROM	program as p
-	WHERE	p.name=name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getProgramInfo_byType` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getProgramInfo_byType`(
-							IN attribute_name VARCHAR(255), 
-							IN type VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "name" then p.name 
-				WHEN "branch_name" then p.branch_name
-                WHEN "branch name" then p.branch_name
-                WHEN "employee_id" then p.employee_id
-                WHEN "employee id" then p.employee_id
-                WHEN "id" then p.employee_id
-                WHEN "date" then p.date
-                WHEN "type" then p.type
-			END) as output
-    FROM	program as p
-	WHERE	p.type=type;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getRoomInfo1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1823,95 +1158,6 @@ BEGIN
 	SET	@attribute_value = attribute_value;
 	EXECUTE	stmt1 USING @attribute_value;
     
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getRoomInfo_byBranchName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getRoomInfo_byBranchName`(
-							IN attribute_name VARCHAR(255), 
-							IN branch_name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then r.branch_name
-                WHEN "branch name" then r.branch_name
-                WHEN "id" then r.id
-                WHEN "number" then r.number
-                WHEN "capacity" then r.capacity
-			END) as output
-    FROM	room as r
-	WHERE	r.branch_name=branch_name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getRoomInfo_byCapacity` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getRoomInfo_byCapacity`(
-							IN attribute_name VARCHAR(255), 
-							IN capacity int unsigned)
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then r.branch_name
-                WHEN "branch name" then r.branch_name
-                WHEN "id" then r.id
-				WHEN "room number" then r.number
-                WHEN "number" then r.number
-                WHEN "capacity" then r.capacity
-			END) as output
-    FROM	room as r
-	WHERE	r.capacity=capacity;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getRoomInfo_byNumber` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getRoomInfo_byNumber`(
-							IN attribute_name VARCHAR(255), 
-							IN room_number int unsigned)
-BEGIN
-	SELECT	(CASE attribute_name
-				WHEN "branch_name" then r.branch_name
-                WHEN "branch name" then r.branch_name
-                WHEN "id" then r.id
-				WHEN "room number" then r.number
-                WHEN "number" then r.number
-                WHEN "capacity" then r.capacity
-			END) as output
-    FROM	room as r
-	WHERE	r.number=room_number;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1960,46 +1206,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getVolunteerById` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteerById`(id int)
-BEGIN
-SELECT * FROM library_db.volunteer
-where volunteer.id = id;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getVolunteerByName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteerByName`(fname varchar(255), lname varchar(255))
-BEGIN
-SELECT * FROM library_db.volunteer
-where volunteer.first_name = fname AND volunteer.last_name = lname;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getVolunteerInfo1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2036,128 +1242,6 @@ BEGIN
 	SET	@attribute_value = attribute_value;
 	EXECUTE	stmt1 USING @attribute_value;
     
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getVolunteerInfo_byId` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteerInfo_byId`(
-										IN attribute_name VARCHAR(255), 
-                                        IN id int unsigned)
-BEGIN
-	SELECT	(CASE attribute_name
-				-- WHEN "branch_name" then v.branch_name
-                WHEN "id" then v.id
-                WHEN "first_name" then v.first_name
-                WHEN "last_name" then v.last_name
-                WHEN "position" then v.position
-			END) as output
-    FROM	volunteer as v
-	WHERE	v.id=id;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getVolunteerInfo_byName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteerInfo_byName`(
-										IN attribute_name VARCHAR(255), 
-                                        IN first_name VARCHAR(255), IN last_name VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				-- WHEN "branch_name" then v.branch_name
-                WHEN "id" then v.id
-                WHEN "first_name" then v.first_name
-                WHEN "last_name" then v.last_name
-                WHEN "position" then v.position
-			END) as output
-    FROM	volunteer as v
-	WHERE	v.first_name=first_name and v.last_name=last_name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getVolunteerInfo_byPosition` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteerInfo_byPosition`(
-										IN attribute_name VARCHAR(255), 
-                                        IN position VARCHAR(255))
-BEGIN
-	SELECT	(CASE attribute_name
-				-- WHEN "branch_name" then v.branch_name
-                WHEN "id" then v.id
-                WHEN "first_name" then v.first_name
-                WHEN "last_name" then v.last_name
-                WHEN "position" then v.position
-			END) as output
-    FROM	volunteer as v
-	WHERE	v.position=position;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getVolunteerInfo_implementation` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getVolunteerInfo_implementation`(
-			IN attribute_name VARCHAR(255),
-            IN first_name VARCHAR(255), IN last_name VARCHAR(255),
-            IN position VARCHAR(255), 
-            IN id int unsigned)
-BEGIN
-	SELECT	(CASE attribute_name
-                WHEN "id" then v.id
-                WHEN "first_name" then v.first_name
-                WHEN "last_name" then v.last_name
-                WHEN "position" then v.position
-			END) as output
-	FROM	volunteer as v
-	WHERE	(first_name IS NOT NULL and last_name IS NOT NULL and
-			v.first_name=first_name and v.last_name=last_name)
-			OR
-            (position is not null and v.position=position)
-            OR
-            (id is not null and v.id=id);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2231,16 +1315,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `returnBook`(
-							IN bid int unsigned, IN cnum int unsigned,
-							IN branchName VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `returnBook`(IN bid int unsigned, IN cnum int unsigned)
 BEGIN
 	DELETE FROM `library_db`.`borrows_book` WHERE 
 	(`card_number` = cnum) and (`book_id` = bid);
-    
-    UPDATE `library_db`.`book`
-    SET		`branch_name`=branchName
-    WHERE	`id`=bid;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2257,16 +1335,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `returnDisc`(
-							IN did int unsigned, IN cnum int unsigned,
-							IN branchName VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `returnDisc`(IN did int unsigned, IN cnum int unsigned)
 BEGIN
 	DELETE FROM `library_db`.`borrows_disc` WHERE 
 	(`card_number` = cnum) and (`disc_id` = did);
-    
-    UPDATE `library_db`.`disc`
-    SET		`branch_name`=branchName
-    WHERE	`id`=did;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2305,26 +1377,6 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SelectBooks`()
 BEGIN
 SELECT * FROM library_db.book;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `test_proc` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `test_proc`()
-BEGIN
-	SELECT * FROM library_db.branch;
-    select * from library_db.book;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2685,4 +1737,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-14 18:41:15
+-- Dump completed on 2020-04-14 18:54:24
