@@ -15,7 +15,7 @@ module.exports = {
             method: 'GET',
             path: '/dbTest',
             handler: async (request, h) => {
-                var result = await db.callStored('getAllBranches');
+                var result = await db.callStored('getAllBranches', []);
                 return result;
             }
         },
