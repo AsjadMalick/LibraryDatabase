@@ -17,3 +17,6 @@ Once that has been completed run
 ```bash
 node index.js
 ```
+
+Post man documentation link
+https://documenter.getpostman.com/view/10961676/Szf26WNB
