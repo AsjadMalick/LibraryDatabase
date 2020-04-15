@@ -146,10 +146,11 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createDisc`(IN dname varchar(255), IN location VARCHAR(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createDisc`(IN dname varchar(255), 
+														IN branchName VARCHAR(255))
 BEGIN
-	INSERT INTO `library_db`.`disc` (`name`, `location`)
-	VALUES (dname, location);
+	INSERT INTO `library_db`.`disc` (`name`, `branch_name`)
+	VALUES (dname, branchName);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -406,7 +407,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteVolunteer`(vid int)
 BEGIN
-DELETE FROM `library_db`.`volunteer_at` WHERE (`id` = vid);
+DELETE FROM `library_db`.`volunteers_at` WHERE (`id` = vid);
 DELETE FROM `library_db`.`volunteer` WHERE (`id` = vid);
 END ;;
 DELIMITER ;
@@ -2684,4 +2685,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-14  0:33:56
+-- Dump completed on 2020-04-14 18:41:15
