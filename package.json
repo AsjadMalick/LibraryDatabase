@@ -18,7 +18,7 @@
   "homepage": "https://github.com/AsjadMalick/LibraryDatabase#readme",
   "dependencies": {
     "@hapi/boom": "^9.1.0",
-    "@hapi/hapi": "^19.1.1",
+    "@hapi/hapi": "^21.4.8",
     "@hapi/joi": "^17.1.1",
     "mysql": "^2.18.1"
   }
